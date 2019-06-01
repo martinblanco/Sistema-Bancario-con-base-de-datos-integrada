@@ -1,6 +1,8 @@
 package basics;
 
 import java.sql.SQLException;
+
+import dao.ClienteDao;
 import dbImpl.dao.ClienteDAODBImpl;
 import entidades.Cliente;
 import exceptions.DAOException;
@@ -19,7 +21,7 @@ public class Main {
 			}
 			
 			
-			ClienteDAODBImpl dm = new ClienteDAODBImpl();
+			ClienteDao dm = new ClienteDAODBImpl();
 			
 			String nom = "cargado1";
 			String ape = "ape1";
