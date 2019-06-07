@@ -85,7 +85,7 @@ public class ClienteDAODBImpl implements ClienteDao{
     }
 
     @Override
-    public List<Cliente> listarUsuarios() {
+    public List<Cliente> listarClientes() {
         List<Cliente> lista = new ArrayList<>();
         String sql = "SELECT * FROM cliente";
         Connection c = DBManager.connect();

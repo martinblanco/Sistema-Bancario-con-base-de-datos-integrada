@@ -1,6 +1,8 @@
 package basics;
 
 import java.sql.SQLException;
+
+import dao.ClienteDao;
 import dbImpl.dao.ClienteDAODBImpl;
 import entidades.Cliente;
 import exceptions.DAOException;
@@ -19,7 +21,7 @@ public class Main {
 			}
 			
 			
-			ClienteDAODBImpl dm = new ClienteDAODBImpl();
+			ClienteDao dm = new ClienteDAODBImpl();
 			
 			String nom = "cargado1";
 			String ape = "ape1";
@@ -49,7 +51,7 @@ public class Main {
 			dm.modificarCliente(aEditar);
 
 			System.out.println("Tengo estos usuarios:");
-			dm.listarUsuarios();
+			dm.listarClientes();
 			System.out.println("------");
 			
 			
@@ -58,7 +60,7 @@ public class Main {
 			dm.eliminarClientecondni(dnib);
 			
 			System.out.println("Tengo estos usuarios:");
-			dm.listarUsuarios();
+			dm.listarClientes();
 			System.out.println("------");
 			
 			//tm.dropUserTable();
