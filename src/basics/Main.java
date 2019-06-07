@@ -51,7 +51,7 @@ public class Main {
 			dm.modificarCliente(aEditar);
 
 			System.out.println("Tengo estos usuarios:");
-			dm.listarUsuarios();
+			dm.listarClientes();
 			System.out.println("------");
 			
 			
@@ -60,7 +60,7 @@ public class Main {
 			dm.eliminarClientecondni(dnib);
 			
 			System.out.println("Tengo estos usuarios:");
-			dm.listarUsuarios();
+			dm.listarClientes();
 			System.out.println("------");
 			
 			//tm.dropUserTable();

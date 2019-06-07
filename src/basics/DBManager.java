@@ -30,7 +30,6 @@ public class DBManager {
 			e.printStackTrace();
 			System.exit(0);
 		}
-
 		return c;
 	}
 
@@ -38,5 +37,4 @@ public class DBManager {
 		File currDir = new File("h2/base_de_datos/");
 		return currDir.getAbsolutePath();
 	}
-
 }
