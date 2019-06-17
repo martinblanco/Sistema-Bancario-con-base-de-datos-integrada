@@ -5,6 +5,8 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
+import exceptions.DBException;
+
 public class DBManager {
 	
 	private static final String DB_DRIVER = "org.h2.Driver";
@@ -14,7 +16,7 @@ public class DBManager {
 	private static final String DB_USERNAME = "sa";
 	private static final String DB_PASSWORD = "";
 
-	public static Connection connect() {
+	public static Connection connect() throws DBException {
 		Connection c = null;
 		try {
 			Class.forName(DBManager.DB_DRIVER);
@@ -28,7 +30,7 @@ public class DBManager {
 			c.setAutoCommit(false);
 		} catch (SQLException e) {
 			e.printStackTrace();
-			System.exit(0);
+			throw new DBException("Error de sql ", e);
 		}
 		return c;
 	}

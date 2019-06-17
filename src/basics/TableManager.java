@@ -4,6 +4,8 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
 
+import exceptions.DBException;
+
 public class TableManager {
 
 	public void createClienteTable() throws SQLException {
@@ -19,22 +21,18 @@ public class TableManager {
 			try {
 				c.rollback();
 			} catch (SQLException e1) {
-				e1.printStackTrace();
+				throw new SQLException("Problema al crear la table", e);
 			}
-			throw e;
 		} finally {
 			try {
 				c.close();
 			} catch (SQLException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
-
-
 	}
 
-	public void dropClienteTable() {
+	public void dropClienteTable() throws SQLException {
 
 		Connection c = DBManager.connect();
 
@@ -49,6 +47,7 @@ public class TableManager {
 				c.rollback();
 			} catch (SQLException e1) {
 				e1.printStackTrace();
+				throw new SQLException("Problema al borrar la table", e);
 			}
 		} finally {
 			try {
