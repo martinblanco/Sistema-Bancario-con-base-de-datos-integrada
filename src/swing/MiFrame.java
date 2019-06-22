@@ -88,7 +88,7 @@ public class MiFrame extends javax.swing.JFrame {
     	
     	menuBar.add(menuUsuario);
     	item1 = new JMenuItem("Consultar Todos los Usuarios");
-    	/*item1.addActionListener(new ActionListener() {
+    	item1.addActionListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -97,7 +97,7 @@ public class MiFrame extends javax.swing.JFrame {
 				} else
 					MiFrame.this.miHandler.mostarMiPanelTodos();
 			}
-		});*/
+		});
     	item2 = new JMenuItem("Alta Usuario");
     	item2.addActionListener(new ActionListener() {
     		

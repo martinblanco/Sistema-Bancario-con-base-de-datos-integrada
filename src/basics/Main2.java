@@ -15,11 +15,11 @@ public class Main2 {
         aInsertar.setApellido(apellido);
         aInsertar.setDni(dni);
 
-        try {
+        /*try {
             ClienteService s = new ClienteService();
             s.insertarCliente(aInsertar);
         } catch (ServicioException e) {
             JOptionPane.showMessageDialog(null, "ERROR AL CREEAR USUARIO");
-        }
+        }*/
     }
 }

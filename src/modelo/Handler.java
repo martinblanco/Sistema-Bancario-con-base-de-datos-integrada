@@ -20,9 +20,6 @@ public class Handler {
 	private int dniCliente;
 
 	public Handler(){
-		ClienteService cliente = new ClienteService();
-		//BusinessObject miLogica = new BusinessObject(cliente);
-		//setBusinessObject(miLogica);
 	}
 	
 	public void altaPersona(Cliente miCliente){
@@ -42,14 +39,6 @@ public class Handler {
 		}
 	}
 	
-	public void setBusinessObject(ClienteService cliente) {
-		this.cliente = cliente;
-	}
-	
-	public void setMiFrame(MiFrame miFrame){
-		this.miFrame = miFrame;
-	}	
-
 	public void mostarMiPanelAlta(){
 		PanelAlta miPanelAlta = new PanelAlta();
 		miPanelAlta.setHandler(this);
@@ -61,11 +50,45 @@ public class Handler {
 		JOptionPane.showMessageDialog(null,exito,"Exito",JOptionPane.INFORMATION_MESSAGE);
 	}
 
+	public void mostarMiPanelTodos(){
+		PanelClientes miLista = new PanelClientes(this);
+		miFrame.setPanel(miLista);
 
+	}
+	
+	public List<Cliente> mostrarTodos(){
+		ClienteService cliente = new ClienteService();
+		List<Cliente> miLista = new ArrayList<Cliente>();
+		try {
+			miLista.addAll(cliente.listarClientes());
+		} catch (ServicioException e) {
+			mostrarError(e.getMessage());
+			e.printStackTrace();
+		}
+		return miLista;
+	}
+	
+	public void eliminarPersona(int dni){
+		try {
+			ClienteService cliente = new ClienteService();
+			cliente.eliminarClientecondni(dni);
+			mostarMiPanelTodos();
+		} catch (ServicioException e) {
+			mostrarError(e.getMessage());
+			e.printStackTrace();
+		} catch(ClienteException e2){
+			mostrarError(e2.getMessage());
+		}
+	}
+	
+	
+	public void setMiFrame(MiFrame miFrame){
+		this.miFrame = miFrame;
+	}	
+	
 	public int getDniCliente() {
 		return dniCliente;
 	}
-
 
 	public void setDniCliente(int dniCliente) {
 		this.dniCliente = dniCliente;

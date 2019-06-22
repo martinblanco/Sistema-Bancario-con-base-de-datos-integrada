@@ -1,5 +1,6 @@
 package service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import dao.ClienteDao;
@@ -26,11 +27,17 @@ public class ClienteService {
 	}
 }
 
-    public void eliminarClientecondni(int dni) throws ServicioException {
+    public void eliminarClientecondni(int dni) throws ServicioException, ClienteException {
     	ClienteDao dao = new ClienteDAODBImpl();
     	try {
-			dao.eliminarClientecondni(dni);
+    		if(dao.consultarCliente(dni).getNombre() != null){
+    			dao.eliminarClientecondni(dni);
+			} else {
+				System.out.println(dni);
+				throw new ClienteException("No se ha encontrado el usuario");
+			}
 		} catch (DAOException e) {
+			System.out.println(dni);
 			throw new ServicioException("Error eliminar cliente", e);
 		}
     }
@@ -46,11 +53,13 @@ public class ClienteService {
 
     public List<Cliente> listarClientes() throws ServicioException {
     	ClienteDao dao = new ClienteDAODBImpl();
+    	List<Cliente> listaClientes = new ArrayList<Cliente>();
         try {
-        	return dao.listarClientes();
+        	listaClientes.addAll(dao.listarClientes());
 		} catch (DAOException e) {
 			throw new ServicioException("Error listar todos los clientes", e);
 		}
+        return listaClientes;
     }
 
     public Cliente consultarCliente(int dni) throws ServicioException {

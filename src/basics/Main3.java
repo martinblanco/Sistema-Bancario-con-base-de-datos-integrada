@@ -11,10 +11,10 @@ public class Main3 {
 		MiFrame prueba = new MiFrame();
 		prueba.setCoordinador(miCoordinador);
 		miCoordinador.setMiFrame(prueba);
-		//Login lg = new Login(prueba, true);
-		//lg.setMiHandler(miCoordinador);
+		Login lg = new Login(prueba, true);
+		lg.setMiHandler(miCoordinador);
 		prueba.setVisible(true);
-
+		lg.setVisible(true);
 	}
 
 }

@@ -18,10 +18,10 @@ public abstract class PanelGenerico extends JPanel {
 	JButton botonAplicar;
 	JButton botonCancelar;
 	JTextField textApellido;
-   JTextField textCajaAhorro;
-   JTextField textCuentaCorriente;
-   JTextField textNombre;
-   JTextField textDni;
+    JTextField textCajaAhorro;
+    JTextField textCuentaCorriente;
+    JTextField textNombre;
+    JTextField textDni;
 	Handler miHandler;
    
    public PanelGenerico() {

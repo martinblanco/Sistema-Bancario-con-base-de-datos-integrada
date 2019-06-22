@@ -54,6 +54,7 @@ public class ClienteDAODBImpl implements ClienteDao{
 			throw new DAOException("Problema al conectar a la db", e2);	
 		}
         try {
+        	System.out.println("asd");
         	Statement s = c.createStatement();
 			s.executeUpdate(sql);
 			c.commit();
@@ -63,7 +64,6 @@ public class ClienteDAODBImpl implements ClienteDao{
             try {
                 c.close();
             } catch (SQLException e1) {
-            	
             	//throw new DAOException("Problema cerrar conexion ", e1);
             }
         }
@@ -112,6 +112,7 @@ public class ClienteDAODBImpl implements ClienteDao{
 			throw new DAOException("Problema al conectar a la db", e2);	
 		}
         try {
+        	Cliente resultado = null;
             Statement s = c.createStatement();
             ResultSet rs = s.executeQuery(sql);
 
@@ -121,8 +122,15 @@ public class ClienteDAODBImpl implements ClienteDao{
                 System.out.print("\t" + rs.getString("apellido"));
                 System.out.print("\t" + rs.getString("dni"));
                 System.out.println();
-
-            }
+                String rsnombre = rs.getString("nombre");
+				String rsapellido = rs.getString("apellido");
+				int rsdni = rs.getInt("dni");
+				resultado = new Cliente();
+				resultado.setNombre(rsnombre);
+				resultado.setApellido(rsapellido);
+				resultado.setDni(rsdni);
+				lista.add(resultado);
+            }    
         } catch (SQLException e) {
             try {
                 c.rollback();
