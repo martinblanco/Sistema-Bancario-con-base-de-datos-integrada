@@ -11,4 +11,5 @@ public interface ClienteDao {
 	public void modificarCliente(String nom,String ape, int dni) throws DAOException; 
 	public List<Cliente> listarClientes() throws DAOException; 
 	public Cliente consultarCliente(int dni) throws DAOException;
+	
 }

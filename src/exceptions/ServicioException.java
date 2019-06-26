@@ -1,9 +1,9 @@
 package exceptions;
 
 @SuppressWarnings("serial")
-public class ServicioException extends DAOException {
+public class ServicioException extends Exception {
     
-	public ServicioException(String message, Throwable cause) {
-        super(message, cause);
+	public ServicioException(String message) {
+        super(message);
     }
 }

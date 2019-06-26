@@ -88,7 +88,7 @@ public class PanelClientes extends JPanel {
         add(panelUsuarios, gridBagConstraints);
 
         titulo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        titulo.setText("Usuarios");
+        titulo.setText("Clientes");
         titulo.setToolTipText("");
         titulo.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
         gridBagConstraints = new java.awt.GridBagConstraints();
@@ -113,7 +113,7 @@ public class PanelClientes extends JPanel {
     }
     
     protected void setBotonModificar(){
-    	 /* botonModificar.addActionListener(new ActionListener() {
+    	 botonModificar.addActionListener(new ActionListener() {
  			
  			@Override
  			public void actionPerformed(ActionEvent e) {
@@ -123,7 +123,7 @@ public class PanelClientes extends JPanel {
  					miHandler.mostrarError("Seleccione una opcion ");
  				}
  			}
- 		});*/
+ 		});
     }
 
 }

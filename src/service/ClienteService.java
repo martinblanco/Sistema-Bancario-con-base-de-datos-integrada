@@ -2,11 +2,9 @@ package service;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import dao.ClienteDao;
 import dbImpl.dao.ClienteDAODBImpl;
 import entidades.Cliente;
-import exceptions.BusinessObjectException;
 import exceptions.ClienteException;
 import exceptions.DAOException;
 import exceptions.LoginException;
@@ -23,7 +21,7 @@ public class ClienteService {
 		} else
 			throw new ClienteException("El usuario ya existe en la base de datos repetido");
 	} catch (DAOException e) {
-		throw new ServicioException("Hubo un problema en la base de datos" , e);
+		throw new ServicioException("Hubo un problema en la base de datos");
 	}
 }
 
@@ -38,7 +36,7 @@ public class ClienteService {
 			}
 		} catch (DAOException e) {
 			System.out.println(dni);
-			throw new ServicioException("Error eliminar cliente", e);
+			throw new ServicioException("Error eliminar cliente");
 		}
     }
 
@@ -47,7 +45,7 @@ public class ClienteService {
         try {
 			dao.modificarCliente(nom,ape,dni);
 		} catch (DAOException e) {
-			throw new ServicioException("Error modificar cliente", e);
+			throw new ServicioException("Error modificar cliente");
 		}
     }
 
@@ -57,7 +55,7 @@ public class ClienteService {
         try {
         	listaClientes.addAll(dao.listarClientes());
 		} catch (DAOException e) {
-			throw new ServicioException("Error listar todos los clientes", e);
+			throw new ServicioException("Error listar todos los clientes");
 		}
         return listaClientes;
     }
@@ -69,12 +67,13 @@ public class ClienteService {
         try {
         	miCliente = dao.consultarCliente(dni);
 		} catch (DAOException e) {
-			throw new ServicioException("Error consultar un cliente", e);
+			throw new ServicioException("Error consultar un cliente");
 		}
         return miCliente;
     }
     
-	public boolean validarLogin(int index, String pass) throws LoginException, BusinessObjectException {
+	public boolean validarLogin(int index, String pass) throws LoginException {
+		ClienteDao dao = new ClienteDAODBImpl();
 		boolean caso = false;
 		if(index==1){
 			if(pass.equals(PASS)){		
@@ -84,11 +83,11 @@ public class ClienteService {
 		} else{
 			int dni = Integer.parseInt(pass);
 			try {
-				if(consultarCliente(dni).getNombre()== null){
+				if(dao.consultarCliente(dni).getNombre()== null){
 					throw new LoginException("Login incorrecto, su dni no aparece en la base de datos ");
 				} else
 					caso = true;
-			} catch (ServicioException e) {
+			} catch (DAOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}

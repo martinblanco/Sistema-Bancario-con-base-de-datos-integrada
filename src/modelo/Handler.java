@@ -8,7 +8,6 @@ import javax.swing.JOptionPane;
 
 import service.ClienteService;
 import entidades.Cliente;
-import exceptions.BusinessObjectException;
 import exceptions.LoginException;
 import exceptions.ServicioException;
 import exceptions.ClienteException;
@@ -56,6 +55,13 @@ public class Handler {
 
 	}
 	
+	public void mostarMiPanelModifica(Cliente miCliente){
+		PanelModificacion miPanelModificacion = new PanelModificacion();
+		miPanelModificacion.setHandler(this);
+		miPanelModificacion.editarCliente(miCliente);
+		miFrame.setPanel(miPanelModificacion);
+	}
+	
 	public List<Cliente> mostrarTodos(){
 		ClienteService cliente = new ClienteService();
 		List<Cliente> miLista = new ArrayList<Cliente>();
@@ -67,6 +73,7 @@ public class Handler {
 		}
 		return miLista;
 	}
+	
 	
 	public void eliminarPersona(int dni){
 		try {
@@ -81,6 +88,16 @@ public class Handler {
 		}
 	}
 	
+	public void modificarCliente(String nom ,String ape, int dni){
+		try {
+			ClienteService cliente = new ClienteService();
+			cliente.modificarCliente(nom,ape,dni);
+			mostarMiPanelTodos();
+		} catch (ServicioException e) {
+			mostrarError(e.getMessage());
+			e.printStackTrace();
+		}
+	}
 	
 	public void setMiFrame(MiFrame miFrame){
 		this.miFrame = miFrame;
@@ -97,6 +114,7 @@ public class Handler {
 	public boolean validarLogin(int index, String pass) {
 		boolean caso = false;
 		try {
+			ClienteService cliente = new ClienteService();
 			caso = cliente.validarLogin(index, pass);
 			mostrarSucces("Login Exitoso");	
 			if(index == 2){
@@ -109,8 +127,6 @@ public class Handler {
 			}
 		} catch (LoginException e) {
 			mostrarError(e.getMessage());
-		} catch (BusinessObjectException e) {
-			e.printStackTrace();
 		}
 		return caso;
 	}

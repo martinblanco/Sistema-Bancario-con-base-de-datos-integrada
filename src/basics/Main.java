@@ -4,7 +4,7 @@ import modelo.Handler;
 import swing.Login;
 import swing.MiFrame;
 
-public class Main3 {
+public class Main {
 
 	public static void main(String[] args) {
 		Handler miCoordinador = new Handler();
@@ -13,8 +13,6 @@ public class Main3 {
 		miCoordinador.setMiFrame(prueba);
 		Login lg = new Login(prueba, true);
 		lg.setMiHandler(miCoordinador);
-		prueba.setVisible(true);
 		lg.setVisible(true);
 	}
-
 }

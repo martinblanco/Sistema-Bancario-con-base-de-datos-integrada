@@ -30,7 +30,7 @@ public class DBManager {
 			c.setAutoCommit(false);
 		} catch (SQLException e) {
 			e.printStackTrace();
-			throw new DBException("Error de sql ", e);
+			throw new DBException();
 		}
 		return c;
 	}

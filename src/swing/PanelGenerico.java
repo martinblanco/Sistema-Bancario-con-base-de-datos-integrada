@@ -80,9 +80,7 @@ public abstract class PanelGenerico extends JPanel {
    	textDni.setText(miCliente.getDni()+"");
    	textDni.setEditable(false);
    	textApellido.setText(miCliente.getApellido());
-   	textApellido.setEditable(false);
    	textNombre.setText(miCliente.getNombre());
-   	textNombre.setEditable(false);
    }
    
    public void setBotonAplicar(){
