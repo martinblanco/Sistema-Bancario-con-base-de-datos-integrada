@@ -88,8 +88,7 @@ public class ClienteService {
 				} else
 					caso = true;
 			} catch (DAOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				throw new LoginException("ERROR");
 			}
 		}
 		return caso;
