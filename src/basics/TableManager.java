@@ -15,6 +15,11 @@ public class TableManager {
 		String sql = "DROP TABLE cliente";
 		conectarDB(sql);
 		}
+	
+	public void createCuentaTable() throws SQLException {
+		String sql = "CREATE TABLE cuenta ( id INTEGER IDENTITY, numerocuenta INTEGER, dni INTEGER, cajaahorro FLOAT, cajadolares FLOAT, cuentacorriente FLOAT)";
+		conectarDB(sql);
+		}
 
 	public void conectarDB(String sql) throws SQLException{
 		Connection c = DBManager.connect();

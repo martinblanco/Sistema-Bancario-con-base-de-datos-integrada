@@ -3,7 +3,6 @@ package service;
 import java.util.ArrayList;
 import java.util.List;
 import dao.ClienteDao;
-import dbImpl.dao.ClienteDAODBImpl;
 import entidades.Cliente;
 import exceptions.ClienteException;
 import exceptions.DAOException;
@@ -12,9 +11,17 @@ import exceptions.ServicioException;
 
 public class ClienteService {
 	private final String PASS = "admin";
+	private ClienteDao dao;
 
+	public ClienteService(ClienteDao dao){
+		setClienteDao(dao);
+	}
+	
+	private void setClienteDao(ClienteDao dao){
+		this.dao = dao;
+	}
+	
     public void insertarCliente(Cliente c) throws ServicioException, ClienteException{
-    	ClienteDao dao = new ClienteDAODBImpl();
     	try {
     	if(dao.consultarCliente(c.getDni()).getNombre() == null){
     		dao.insertarCliente(c);
@@ -26,7 +33,6 @@ public class ClienteService {
 }
 
     public void eliminarClientecondni(int dni) throws ServicioException, ClienteException {
-    	ClienteDao dao = new ClienteDAODBImpl();
     	try {
     		if(dao.consultarCliente(dni).getNombre() != null){
     			dao.eliminarClientecondni(dni);
@@ -41,7 +47,6 @@ public class ClienteService {
     }
 
     public void modificarCliente(String nom,String ape, int dni) throws ServicioException {
-    	ClienteDao dao = new ClienteDAODBImpl();
         try {
 			dao.modificarCliente(nom,ape,dni);
 		} catch (DAOException e) {
@@ -50,7 +55,6 @@ public class ClienteService {
     }
 
     public List<Cliente> listarClientes() throws ServicioException {
-    	ClienteDao dao = new ClienteDAODBImpl();
     	List<Cliente> listaClientes = new ArrayList<Cliente>();
         try {
         	listaClientes.addAll(dao.listarClientes());
@@ -61,7 +65,6 @@ public class ClienteService {
     }
 
     public Cliente consultarCliente(int dni) throws ServicioException {
-    	ClienteDao dao = new ClienteDAODBImpl();
     	Cliente miCliente = new Cliente();
     	miCliente = null;
         try {
@@ -73,7 +76,6 @@ public class ClienteService {
     }
     
 	public boolean validarLogin(int index, String pass) throws LoginException {
-		ClienteDao dao = new ClienteDAODBImpl();
 		boolean caso = false;
 		if(index==1){
 			if(pass.equals(PASS)){		

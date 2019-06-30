@@ -21,6 +21,7 @@ public abstract class PanelGenerico extends JPanel {
     JTextField textCajaAhorro;
     JTextField textCuentaCorriente;
     JTextField textNombre;
+    JTextField textCajaDolares;
     JTextField textDni;
 	Handler miHandler;
    
@@ -37,15 +38,10 @@ public abstract class PanelGenerico extends JPanel {
        JLabel labelTitulo = new JLabel();
        botonAplicar = new JButton();
        textNombre = new JTextField();
-       textApellido = new JTextField();
-       textCuentaCorriente = new JTextField();
-       textCajaAhorro = new JTextField();
+       textApellido = new JTextField();;
        botonCancelar = new JButton();
        textDni = new JTextField();
        
-       
-       
-
        setBackground(new java.awt.Color(204, 204, 204));
        setLayout(new java.awt.GridBagLayout());
 
@@ -96,7 +92,6 @@ public abstract class PanelGenerico extends JPanel {
    }
 
    protected GridBagConstraints gridText(int x, int y){
-   	
        GridBagConstraints gridBagConstraints = new java.awt.GridBagConstraints();
        gridBagConstraints.gridx = x;
        gridBagConstraints.gridy = y;
@@ -115,14 +110,10 @@ public abstract class PanelGenerico extends JPanel {
    protected void agregarBotones(){
        JLabel labelNombre = new JLabel();
        JLabel labelApellido = new JLabel();
-       //JLabel labelCuentaCorriente = new JLabel();
-       //JLabel labelCajaAhorro = new JLabel();
        JLabel labelDni = new JLabel();
        
        textNombre = new JTextField();
        textApellido = new JTextField();
-       //textCuentaCorriente = new JTextField();
-       //textCajaAhorro = new JTextField();
        textDni = new JTextField();
        
        labelDni.setText("Dni");
@@ -131,15 +122,9 @@ public abstract class PanelGenerico extends JPanel {
        add(labelNombre, gridLabel(1, 4));
        labelApellido.setText("Apellido");
        add(labelApellido, gridLabel(1, 6));
-       //labelCuentaCorriente.setText("Cuenta Corriente");
-       //add(labelCuentaCorriente, gridLabel(1,10));
-       //labelCajaAhorro.setText("Caja Ahorros");
-       //add(labelCajaAhorro, gridLabel(1, 8));
        
        add(textNombre, gridText(3, 4));
        add(textApellido, gridText(3, 6));
-       //add(textCuentaCorriente, gridText(3, 10));
-       //add(textCajaAhorro, gridText(3, 8));
        add(textDni, gridText(3, 2));
    }
 

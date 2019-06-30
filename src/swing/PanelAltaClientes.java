@@ -10,11 +10,11 @@ import javax.swing.JLabel;
 import entidades.Cliente;
 import modelo.Handler;
 
-public class PanelAlta extends PanelGenerico {
+public class PanelAltaClientes extends PanelGenerico {
 
 	private static final long serialVersionUID = 1L;
 	
-	public PanelAlta(){
+	public PanelAltaClientes(){
 		super();
 	}
 	
@@ -35,9 +35,9 @@ public class PanelAlta extends PanelGenerico {
 					miCliente.setNombre(textNombre.getText());
 					miCliente.setApellido(textApellido.getText());
 					miCliente.setDni(Integer.parseInt(textDni.getText()));
-					PanelAlta.this.miHandler.altaPersona(miCliente);
+					PanelAltaClientes.this.miHandler.altaCliente(miCliente);
 				} catch (NumberFormatException e1) {
-					PanelAlta.this.miHandler.mostrarError("Valores ingresados no validos, no deje campos vacios");
+					PanelAltaClientes.this.miHandler.mostrarError("Valores ingresados no validos, no deje campos vacios");
 				}
 				
 			}
@@ -51,7 +51,7 @@ public class PanelAlta extends PanelGenerico {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				PanelAlta.this.miHandler.mostarMiPanelAlta();
+				PanelAltaClientes.this.miHandler.mostarMiPanelAlta();
 			}
 		});	
 	}

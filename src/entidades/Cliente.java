@@ -4,8 +4,6 @@ public class Cliente {
 	private String nombre;
 	private String apellido;
 	private int dni;
-	//private float cuentaCorriente;
-	//private float cajaAhorro;
 	
 	public Cliente() {
 	
@@ -35,27 +33,11 @@ public class Cliente {
 	public void setDni(int dni) {
 		this.dni = dni;
 	}
-	/*/public float getCuentaCorriente() {
-		return cuentaCorriente;
-		}
-	public void setCuentaCorriente(float cuentaCorriente) {
-		this.cuentaCorriente = cuentaCorriente;
-	}
 	
-	public float getCajaAhorro() {
-		return cajaAhorro;
-		}
-	
-	public void setCajaAhorro(float cajaAhorros) {
-		this.cajaAhorro = cajaAhorros;
-	}/*/
 	
 	@Override
 	public String toString() {
-		return "Nombre=" + nombre + " - Apellido=" + apellido
-				+ " - Dni=" + dni;
-				//+ " - Cuentacorriente=" + cuentaCorriente
-				//+ " - Cajaahorro=" + cajaAhorro ;
+		return "Nombre=" + nombre + " - Apellido=" + apellido + " - Dni=" + dni;
 	}
 
 }
