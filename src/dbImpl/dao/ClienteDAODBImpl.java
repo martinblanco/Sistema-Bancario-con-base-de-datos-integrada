@@ -73,12 +73,9 @@ public class ClienteDAODBImpl extends DAODBImpl implements ClienteDao{
                 String rsnombre = rs.getString("nombre");
 				String rsapellido = rs.getString("apellido");
 				int rsdni = rs.getInt("dni");
-				resultado = new Cliente();
-				resultado.setNombre(rsnombre);
-				resultado.setApellido(rsapellido);
-				resultado.setDni(rsdni);
+				resultado = new Cliente(rsnombre,rsapellido,rsdni);
 				lista.add(resultado);
-            }    
+            }
         } catch (SQLException e) {
             rollbackDB(c);
         } finally {

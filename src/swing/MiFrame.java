@@ -36,7 +36,7 @@ public class MiFrame extends javax.swing.JFrame {
     public javax.swing.JPanel panelTitulo;
     public javax.swing.JScrollPane panelVariable;
 	JMenuItem item1,item2,item3,item4,item5,item6;
-	JMenu menuUsuario,homeBanking,menuCuentas ;
+	JMenu menuClientes,homeBanking,menuCuentas ;
 	JMenuBar menuBar;
 
 	//PanelUsuarios panel;
@@ -84,21 +84,21 @@ public class MiFrame extends javax.swing.JFrame {
     private JMenuBar setMenuBar(){
     	menuBar = new JMenuBar();
     	
-    	menuUsuario = new JMenu("Personas ");
+    	menuClientes = new JMenu("Clientes ");
     	
-    	menuBar.add(menuUsuario);
-    	item1 = new JMenuItem("Consultar Todos los Usuarios");
+    	menuBar.add(menuClientes);
+    	item1 = new JMenuItem("Consultar Todos los Clientes");
     	item1.addActionListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				if(MiFrame.this.miHandler.mostrarTodos().isEmpty() == true){
-					MiFrame.this.miHandler.mostrarError("No se puede mostrar la lista ya que no hay usuarios ingresados ");
+					MiFrame.this.miHandler.mostrarError("No se puede mostrar la lista ya que no hay Clientes ingresados ");
 				} else
 					MiFrame.this.miHandler.mostarMiPanelTodos();
 			}
 		});
-    	item2 = new JMenuItem("Alta Usuario");
+    	item2 = new JMenuItem("Alta Cliente");
     	item2.addActionListener(new ActionListener() {
     		
 			@Override
@@ -106,13 +106,13 @@ public class MiFrame extends javax.swing.JFrame {
 				MiFrame.this.miHandler.mostarMiPanelAlta();
 			}
 		});
-    	menuUsuario.add(item1);
-    	menuUsuario.add(item2);
+    	menuClientes.add(item1);
+    	menuClientes.add(item2);
     	
     	menuCuentas = new JMenu("Cuentas");
     	menuBar.add(menuCuentas);
     	item3 = new JMenuItem("Consultar Cuentas ");
-    	/*item3.addActionListener(new ActionListener() {
+    	item3.addActionListener(new ActionListener() {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -121,15 +121,15 @@ public class MiFrame extends javax.swing.JFrame {
 					}else
 						MiFrame.this.miHandler.mostrarPanelCuentas();
 			}
-		});*/
+		});
     	item4 = new JMenuItem("Crear cuentas ");
-    	/*item4.addActionListener(new ActionListener() {
+    	item4.addActionListener(new ActionListener() {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				MiFrame.this.miHandler.mostrarPanelAltaCuentas();
 			}
-		});*/
+		});
     	menuCuentas.add(item3);
     	menuCuentas.add(item4);
     	
@@ -150,7 +150,7 @@ public class MiFrame extends javax.swing.JFrame {
     }
     
     public void setMenuUsuario(){
-    	menuUsuario.setEnabled(false);
+    	menuClientes.setEnabled(false);
     	menuCuentas.setEnabled(false);
     }
     

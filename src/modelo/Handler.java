@@ -2,34 +2,69 @@ package modelo;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import javax.swing.JFrame;
 import javax.swing.JOptionPane;
+import swing.*;
 
+import dao.ClienteDao;
+import dao.CuentaDao;
+import dbImpl.dao.ClienteDAODBImpl;
+import dbImpl.dao.CuentaDAODBImpl;
 import service.ClienteService;
+import service.CuentaService;
 import entidades.Cliente;
+import entidades.Cuenta;
 import exceptions.LoginException;
 import exceptions.ServicioException;
 import exceptions.ClienteException;
-import swing.*;
+import exceptions.CuentaException;
+
 
 public class Handler {
 	private ClienteService cliente;
+	private CuentaService cuenta;
 	private MiFrame miFrame;
 	private int dniCliente;
 
 	public Handler(){
+			ClienteDao clienteDao = new ClienteDAODBImpl();
+			ClienteService clienteService = new ClienteService(clienteDao);
+			setCliente(clienteService);
+			
+			CuentaDao cuentaDao = new CuentaDAODBImpl();
+			CuentaService cuentaService = new CuentaService(cuentaDao);
+			setCuenta(cuentaService);	
 	}
 	
-	public void altaPersona(Cliente miCliente){
+	public ClienteService getCliente() {
+		return cliente;
+	}
+
+	public void setCliente(ClienteService cliente) {
+		this.cliente = cliente;
+	}
+	
+	public CuentaService getCuenta() {
+		return cuenta;
+	}
+
+	public void setCuenta(CuentaService cuenta) {
+		this.cuenta = cuenta;
+	}
+	
+	public void setMiFrame(MiFrame miFrame){
+		this.miFrame = miFrame;
+	}
+	
+	//////////////////////////// Paneles Clientes
+	
+	public void altaCliente(Cliente miCliente){
 		 try {
-			ClienteService cliente = new ClienteService();
 			cliente.insertarCliente(miCliente);
-			mostrarSucces("Se ha dado de alta al usuario " + miCliente.getNombre());
-			if(JOptionPane.showConfirmDialog(null, "Quiere seguir ingresando usuarios?") == 1){
+			mostrarSucces("Se ha dado de alta al Cliente " + miCliente.getNombre());
+			if(JOptionPane.showConfirmDialog(null, "Quiere seguir ingresando Clientes?") == 1){
 				mostarMiPanelAlta();
 			} else
-				mostarMiPanelAlta();
+				mostarMiPanelTodos();
 		} catch (ServicioException e) {
 			mostrarError(e.getMessage());
 		} catch(ClienteException e2){
@@ -39,9 +74,10 @@ public class Handler {
 	}
 	
 	public void mostarMiPanelAlta(){
-		PanelAlta miPanelAlta = new PanelAlta();
+		PanelAltaClientes miPanelAlta = new PanelAltaClientes();
 		miPanelAlta.setHandler(this);
 		miFrame.setPanel(miPanelAlta);
+		
 	}public void mostrarError(String error){
 		JOptionPane.showMessageDialog(null,error,"Error",JOptionPane.ERROR_MESSAGE);
 	}
@@ -63,7 +99,6 @@ public class Handler {
 	}
 	
 	public List<Cliente> mostrarTodos(){
-		ClienteService cliente = new ClienteService();
 		List<Cliente> miLista = new ArrayList<Cliente>();
 		try {
 			miLista.addAll(cliente.listarClientes());
@@ -74,10 +109,18 @@ public class Handler {
 		return miLista;
 	}
 	
-	
-	public void eliminarPersona(int dni){
+	public Cliente buscarCliente(int dni){
+		Cliente clientebuscado = null;
 		try {
-			ClienteService cliente = new ClienteService();
+			clientebuscado = cliente.consultarCliente(dni);
+		} catch (ServicioException e) {
+			mostrarError(e.getMessage());
+		}
+		return clientebuscado;
+	}
+	
+	public void eliminarCliente(int dni){
+		try {
 			cliente.eliminarClientecondni(dni);
 			mostarMiPanelTodos();
 		} catch (ServicioException e) {
@@ -90,17 +133,12 @@ public class Handler {
 	
 	public void modificarCliente(String nom ,String ape, int dni){
 		try {
-			ClienteService cliente = new ClienteService();
 			cliente.modificarCliente(nom,ape,dni);
 			mostarMiPanelTodos();
 		} catch (ServicioException e) {
 			mostrarError(e.getMessage());
 			e.printStackTrace();
 		}
-	}
-	
-	public void setMiFrame(MiFrame miFrame){
-		this.miFrame = miFrame;
 	}	
 	
 	public int getDniCliente() {
@@ -111,10 +149,11 @@ public class Handler {
 		this.dniCliente = dniCliente;
 	}	
 	
+	///////////////////Login
+	
 	public boolean validarLogin(int index, String pass) {
 		boolean caso = false;
 		try {
-			ClienteService cliente = new ClienteService();
 			caso = cliente.validarLogin(index, pass);
 			mostrarSucces("Login Exitoso");	
 			if(index == 2){
@@ -130,4 +169,54 @@ public class Handler {
 		}
 		return caso;
 	}
+
+	////////////////////////////////////////////////////////////Cuentas
+	
+	public void mostrarPanelAltaCuentas(){
+		PanelAltaCuentas altaCuentas = new PanelAltaCuentas();
+		altaCuentas.setHandler(this);
+		miFrame.setPanel(altaCuentas);
+	}
+	
+	public void mostrarPanelCuentas(){
+		PanelCuentas cuentas = new PanelCuentas(this);
+		miFrame.setPanel(cuentas);
+	}
+	
+	public List<Cuenta> mostrarCuentas(){
+		List<Cuenta> miLista = new ArrayList<Cuenta>();
+		try {
+			miLista.addAll(cuenta.listarCuentas());
+		} catch (ServicioException e) {
+			mostrarError(e.getMessage());
+			e.printStackTrace();
+		}
+		return miLista;
+	}
+	
+	
+	
+	public void bajaCuenta(int numeroCuenta){
+		try {
+			cuenta.eliminarCuenta(numeroCuenta);
+		} catch (CuentaException e) {
+			mostrarError(e.getMessage());
+		} catch (ServicioException e) {
+			mostrarError(e.getMessage());
+		}
+		
+	}
+	
+	public void altaCuenta(Cuenta miCuenta){
+		try {
+			cuenta.altaCuenta(miCuenta);
+		} catch (ServicioException e) {
+			e.printStackTrace();
+		} catch (CuentaException e) {
+			mostrarError(e.getMessage());
+			//mostrarHomeBanking();
+		}
+	}
+	
+	
 }
