@@ -12,7 +12,6 @@ public class ClienteModel extends AbstractTableModel {
 	private List<Cliente> clientes;
 	private static final int DNI = 0; private static final 
 	int NOMBRE = 1; private static final int APELLIDO = 2; 
-	//private static final int CC = 3; private static final int CA = 4;
 	private String[] titulos = {"Dni", "Nombre", "Apellido"};
 	
 	public ClienteModel(List<Cliente> clientes){

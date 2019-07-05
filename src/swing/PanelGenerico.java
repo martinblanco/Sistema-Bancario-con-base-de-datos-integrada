@@ -10,6 +10,7 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 import entidades.Cliente;
+import entidades.Cuenta;
 import modelo.Handler;
 
 public abstract class PanelGenerico extends JPanel {
@@ -23,6 +24,7 @@ public abstract class PanelGenerico extends JPanel {
     JTextField textNombre;
     JTextField textCajaDolares;
     JTextField textDni;
+    JTextField textNumeroCuenta;
 	Handler miHandler;
    
    public PanelGenerico() {
@@ -39,6 +41,9 @@ public abstract class PanelGenerico extends JPanel {
        botonAplicar = new JButton();
        textNombre = new JTextField();
        textApellido = new JTextField();;
+       textCajaAhorro = new JTextField();;
+       textCuentaCorriente = new JTextField();;
+       textCajaDolares = new JTextField();;
        botonCancelar = new JButton();
        textDni = new JTextField();
        
@@ -69,9 +74,7 @@ public abstract class PanelGenerico extends JPanel {
        agregarBotones();
        
    }              
-
-                        
-   
+               
    public void editarCliente(Cliente miCliente){
    	textDni.setText(miCliente.getDni()+"");
    	textDni.setEditable(false);
@@ -79,8 +82,15 @@ public abstract class PanelGenerico extends JPanel {
    	textNombre.setText(miCliente.getNombre());
    }
    
+   public void editarCuenta(Cuenta miCuenta){
+	 textNumeroCuenta.setText(miCuenta.getNumeroCuenta()+"");
+	 textNumeroCuenta.setEditable(false);
+	 textCajaAhorro.setText(miCuenta.getCajaAhorros()+"");
+	 textCuentaCorriente.setText(miCuenta.getCuentaCorriente()+"");
+	 textCajaDolares.setText(miCuenta.getCajaDolares()+"");
+   }
+   
    public void setBotonAplicar(){
-
    }
    
    public String setTitulo(String titulo){
@@ -88,7 +98,6 @@ public abstract class PanelGenerico extends JPanel {
    }
    
    public void setBotonCancelar(){
-
    }
 
    protected GridBagConstraints gridText(int x, int y){
@@ -108,7 +117,7 @@ public abstract class PanelGenerico extends JPanel {
    }
 
    protected void agregarBotones(){
-       JLabel labelNombre = new JLabel();
+	   JLabel labelNombre = new JLabel();
        JLabel labelApellido = new JLabel();
        JLabel labelDni = new JLabel();
        
@@ -127,6 +136,5 @@ public abstract class PanelGenerico extends JPanel {
        add(textApellido, gridText(3, 6));
        add(textDni, gridText(3, 2));
    }
-
 
 }

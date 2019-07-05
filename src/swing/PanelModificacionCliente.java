@@ -4,8 +4,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 @SuppressWarnings("serial")
-public class PanelModificacion extends PanelGenerico {
-	public PanelModificacion(){
+public class PanelModificacionCliente extends PanelGenerico {
+	public PanelModificacionCliente(){
 		super();
 	}
 
@@ -22,10 +22,9 @@ public class PanelModificacion extends PanelGenerico {
 					nom = textNombre.getText();
 					ape = textApellido.getText();
 					DNI = Integer.parseInt(textDni.getText());
-	    		    	PanelModificacion.this.miHandler.modificarCliente(nom,ape,DNI);
-						//PanelModificacion.this.miHandler.mostrarError("No puede ingresar valores negativos a la caja ");
+					PanelModificacionCliente.this.miHandler.modificarCliente(nom,ape,DNI);
 				} catch (NumberFormatException e1) {
-					PanelModificacion.this.miHandler.mostrarError("Ingrese valores numericos ");
+					PanelModificacionCliente.this.miHandler.mostrarError("Ingrese valores numericos ");
 				}
 			}
 		});
@@ -38,13 +37,13 @@ public class PanelModificacion extends PanelGenerico {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				PanelModificacion.this.miHandler.mostarMiPanelTodos();
+				PanelModificacionCliente.this.miHandler.mostarMiPanelClientes();
 			}
 		});	
 	}
 	@Override
 	public String setTitulo(String titulo) {
-		titulo = "Panel Modificacion";
+		titulo = "Panel Modificacion de Clientes";
 		return super.setTitulo(titulo);
 	}
 	

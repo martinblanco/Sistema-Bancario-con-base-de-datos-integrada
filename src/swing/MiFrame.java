@@ -92,10 +92,10 @@ public class MiFrame extends javax.swing.JFrame {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				if(MiFrame.this.miHandler.mostrarTodos().isEmpty() == true){
+				if(MiFrame.this.miHandler.mostrarTodosClientes().isEmpty() == true){
 					MiFrame.this.miHandler.mostrarError("No se puede mostrar la lista ya que no hay Clientes ingresados ");
 				} else
-					MiFrame.this.miHandler.mostarMiPanelTodos();
+					MiFrame.this.miHandler.mostarMiPanelClientes();
 			}
 		});
     	item2 = new JMenuItem("Alta Cliente");
@@ -103,7 +103,7 @@ public class MiFrame extends javax.swing.JFrame {
     		
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				MiFrame.this.miHandler.mostarMiPanelAlta();
+				MiFrame.this.miHandler.mostarMiPanelAltaClientes();
 			}
 		});
     	menuClientes.add(item1);
@@ -116,7 +116,7 @@ public class MiFrame extends javax.swing.JFrame {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-					if(MiFrame.this.miHandler.mostrarCuentas().isEmpty() == true){
+					if(MiFrame.this.miHandler.mostrarTodosCuentas().isEmpty() == true){
 						MiFrame.this.miHandler.mostrarError("No se puede mostrar el panel ya que no hay cuentas ingresadas ");
 					}else
 						MiFrame.this.miHandler.mostrarPanelCuentas();

@@ -40,7 +40,7 @@ public class PanelClientes extends JPanel {
         botonModificar = new JButton();
         botonEliminar = new JButton();
         panelUsuarios = new JScrollPane();
-        listaUsuarios = new JTable(new ClienteModel(miHandler.mostrarTodos()));
+        listaUsuarios = new JTable(new ClienteModel(miHandler.mostrarTodosClientes()));
         titulo = new JLabel();
         
         setLayout(new java.awt.GridBagLayout());
@@ -103,7 +103,7 @@ public class PanelClientes extends JPanel {
     		@Override
     		public void actionPerformed(ActionEvent e) {
     			try {
-    				int dni = (miHandler.mostrarTodos().get(listaUsuarios.getSelectedRow()).getDni());
+    				int dni = (miHandler.mostrarTodosClientes().get(listaUsuarios.getSelectedRow()).getDni());
     				miHandler.eliminarCliente(dni);
     			} catch (ArrayIndexOutOfBoundsException e1) {
     				miHandler.mostrarError("Seleccione una opcion ");
@@ -118,7 +118,7 @@ public class PanelClientes extends JPanel {
  			@Override
  			public void actionPerformed(ActionEvent e) {
  				try {
- 					PanelClientes.this.miHandler.mostarMiPanelModifica(miHandler.mostrarTodos().get(listaUsuarios.getSelectedRow()));
+ 					PanelClientes.this.miHandler.mostarMiPanelModificaCliente(miHandler.mostrarTodosClientes().get(listaUsuarios.getSelectedRow()));
  				} catch (ArrayIndexOutOfBoundsException e1) {
  					miHandler.mostrarError("Seleccione una opcion ");
  				}

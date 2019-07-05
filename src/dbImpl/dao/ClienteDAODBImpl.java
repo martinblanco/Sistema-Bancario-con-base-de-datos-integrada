@@ -10,6 +10,8 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
+import basics.DBManager;
+
 public class ClienteDAODBImpl extends DAODBImpl implements ClienteDao{
     
 	@Override
@@ -110,5 +112,5 @@ public class ClienteDAODBImpl extends DAODBImpl implements ClienteDao{
         }
         return resultado;
     }
-
+    
 }

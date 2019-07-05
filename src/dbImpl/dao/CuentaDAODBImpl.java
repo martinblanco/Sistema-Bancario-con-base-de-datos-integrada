@@ -88,7 +88,7 @@ public class CuentaDAODBImpl extends DAODBImpl implements CuentaDao{
 	  	@Override
 	    public Cuenta consultarCuenta(int numeroCuenta) throws DAOException{
 	    	Cuenta resultado = new Cuenta();
-	        String sql = "SELECT * FROM cuenta WHERE dni = '" + numeroCuenta + "'";
+	        String sql = "SELECT * FROM cuenta WHERE numeroCuenta = '" + numeroCuenta + "'";
 	        Connection c = null;
 			c = coneccionDB(c);
 	        try {
@@ -98,11 +98,11 @@ public class CuentaDAODBImpl extends DAODBImpl implements CuentaDao{
 	            	System.out.println("\r\nCuenta Consultado: ");
 	                System.out.println(rs.getString("numerocuenta") + " " + rs.getString("cajaahorro") + " " + rs.getString("dni") + " " + rs.getString("cajadolares") + " " + rs.getString("cuentacorriente"));
 	                int rsdni = rs.getInt("dni");
+	                int rsnumerocuenta = rs.getInt("numerocuenta");
+	                resultado.setNumeroCuenta(rsnumerocuenta);
 	                float rscajaahorro = rs.getFloat("cajahorro");
 	                float recajadolares = rs.getFloat("cajadolares");
 	                float recuentacorriente = rs.getFloat("cuentacorriente");
-	                int rsnumerocuenta = rs.getInt("numerocuenta");
-					resultado.setNumeroCuenta(rsnumerocuenta);
 					resultado.setCajaAhorros(rscajaahorro);
 					resultado.setCajaDolares(recajadolares);
 					resultado.setCuentaCorriente(recuentacorriente);

@@ -36,15 +36,14 @@ public class PanelAltaCuentas extends PanelGenerico {
 						cuenta.setCajaAhorros(Float.parseFloat(textCajaAhorro.getText()));
 						cuenta.setCajaDolares(Float.parseFloat(textCajaDolares.getText()));
 						cuenta.setCuentaCorriente(Float.parseFloat(textCuentaCorriente.getText()));
-						PanelAltaCuentas.this.miHandler.altaCuenta(cuenta);
+						
 					} catch (NumberFormatException e1) {
 						PanelAltaCuentas.this.miHandler.mostrarError("Ingrese bien los valores ");
 					}
+					PanelAltaCuentas.this.miHandler.altaCuenta(cuenta);
 					//PanelAltaCuentas.this.miHandler.setCuenta(Integer.parseInt(textDni.getText()), Integer.parseInt(textNumeroCuenta.getText()));
 				} else
 					PanelAltaCuentas.this.miHandler.mostrarError("No existe el cliente en la base de datos ");
-
-				
 			}
 		});
 	}

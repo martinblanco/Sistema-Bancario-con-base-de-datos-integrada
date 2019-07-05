@@ -62,18 +62,18 @@ public class Handler {
 			cliente.insertarCliente(miCliente);
 			mostrarSucces("Se ha dado de alta al Cliente " + miCliente.getNombre());
 			if(JOptionPane.showConfirmDialog(null, "Quiere seguir ingresando Clientes?") == 1){
-				mostarMiPanelAlta();
+				mostarMiPanelAltaClientes();
 			} else
-				mostarMiPanelTodos();
+				mostarMiPanelClientes();
 		} catch (ServicioException e) {
 			mostrarError(e.getMessage());
 		} catch(ClienteException e2){
 			mostrarError(e2.getMessage());
-			mostarMiPanelAlta();
+			mostarMiPanelAltaClientes();
 		}
 	}
 	
-	public void mostarMiPanelAlta(){
+	public void mostarMiPanelAltaClientes(){
 		PanelAltaClientes miPanelAlta = new PanelAltaClientes();
 		miPanelAlta.setHandler(this);
 		miFrame.setPanel(miPanelAlta);
@@ -85,20 +85,20 @@ public class Handler {
 		JOptionPane.showMessageDialog(null,exito,"Exito",JOptionPane.INFORMATION_MESSAGE);
 	}
 
-	public void mostarMiPanelTodos(){
+	public void mostarMiPanelClientes(){
 		PanelClientes miLista = new PanelClientes(this);
 		miFrame.setPanel(miLista);
 
 	}
 	
-	public void mostarMiPanelModifica(Cliente miCliente){
-		PanelModificacion miPanelModificacion = new PanelModificacion();
+	public void mostarMiPanelModificaCliente(Cliente miCliente){
+		PanelModificacionCliente miPanelModificacion = new PanelModificacionCliente();
 		miPanelModificacion.setHandler(this);
 		miPanelModificacion.editarCliente(miCliente);
 		miFrame.setPanel(miPanelModificacion);
 	}
 	
-	public List<Cliente> mostrarTodos(){
+	public List<Cliente> mostrarTodosClientes(){
 		List<Cliente> miLista = new ArrayList<Cliente>();
 		try {
 			miLista.addAll(cliente.listarClientes());
@@ -122,7 +122,7 @@ public class Handler {
 	public void eliminarCliente(int dni){
 		try {
 			cliente.eliminarClientecondni(dni);
-			mostarMiPanelTodos();
+			mostarMiPanelClientes();
 		} catch (ServicioException e) {
 			mostrarError(e.getMessage());
 			e.printStackTrace();
@@ -134,7 +134,7 @@ public class Handler {
 	public void modificarCliente(String nom ,String ape, int dni){
 		try {
 			cliente.modificarCliente(nom,ape,dni);
-			mostarMiPanelTodos();
+			mostarMiPanelClientes();
 		} catch (ServicioException e) {
 			mostrarError(e.getMessage());
 			e.printStackTrace();
@@ -183,7 +183,14 @@ public class Handler {
 		miFrame.setPanel(cuentas);
 	}
 	
-	public List<Cuenta> mostrarCuentas(){
+	public void mostarMiPanelModificaCuenta(Cuenta miCuenta){
+		PanelModificacionCuenta miPanelModificacion = new PanelModificacionCuenta();
+		miPanelModificacion.setHandler(this);
+		miPanelModificacion.editarCuenta(miCuenta);
+		miFrame.setPanel(miPanelModificacion);
+	}
+		
+	public List<Cuenta> mostrarTodosCuentas(){
 		List<Cuenta> miLista = new ArrayList<Cuenta>();
 		try {
 			miLista.addAll(cuenta.listarCuentas());
@@ -194,11 +201,20 @@ public class Handler {
 		return miLista;
 	}
 	
-	
+	public Cuenta buscarCuenta(int numeroCuenta){
+		Cuenta cuentabuscada = null;
+		try {
+			cuentabuscada = cuenta.consultarCuenta(numeroCuenta);
+		} catch (ServicioException e) {
+			mostrarError(e.getMessage());
+		}
+		return cuentabuscada;
+	}
 	
 	public void bajaCuenta(int numeroCuenta){
 		try {
 			cuenta.eliminarCuenta(numeroCuenta);
+			mostrarPanelCuentas();
 		} catch (CuentaException e) {
 			mostrarError(e.getMessage());
 		} catch (ServicioException e) {
@@ -210,13 +226,26 @@ public class Handler {
 	public void altaCuenta(Cuenta miCuenta){
 		try {
 			cuenta.altaCuenta(miCuenta);
+			mostrarSucces("Se ha dado de alta la el Numero de Cuenta: " + miCuenta.getNumeroCuenta());
+			if(JOptionPane.showConfirmDialog(null, "Quiere seguir ingresando Cuentas?") == 1){
+				mostrarPanelAltaCuentas();
+			} else
+				mostrarPanelCuentas();
 		} catch (ServicioException e) {
 			e.printStackTrace();
 		} catch (CuentaException e) {
 			mostrarError(e.getMessage());
-			//mostrarHomeBanking();
 		}
 	}
 	
+	public void modificarCuenta(int numeroCuenta, float cuentacorriente, float cajaahorro, float cajadolares){
+		try {
+			cuenta.modificarCuenta(numeroCuenta,cuentacorriente,cajaahorro,cajadolares);
+			mostrarPanelCuentas();
+		} catch (ServicioException e) {
+			mostrarError(e.getMessage());
+			e.printStackTrace();
+		}
+	}	
 	
 }

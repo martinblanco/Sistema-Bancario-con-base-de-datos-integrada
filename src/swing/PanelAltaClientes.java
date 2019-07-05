@@ -51,13 +51,13 @@ public class PanelAltaClientes extends PanelGenerico {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				PanelAltaClientes.this.miHandler.mostarMiPanelAlta();
+				PanelAltaClientes.this.miHandler.mostarMiPanelClientes();
 			}
 		});	
 	}
 	@Override
 	public String setTitulo(String titulo) {
-		titulo = "Panel Alta ";
+		titulo = "Panel Alta Clientes";
 		return super.setTitulo(titulo);
 	}
 	
