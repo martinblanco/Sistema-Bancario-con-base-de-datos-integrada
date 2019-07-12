@@ -9,6 +9,7 @@ import javax.swing.JTextField;
 import entidades.Cuenta;
 import modelo.Handler;
 
+@SuppressWarnings("serial")
 public class PanelAltaCuentas extends PanelGenerico {
 	
 	JTextField textNumeroCuenta;

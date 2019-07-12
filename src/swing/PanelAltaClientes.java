@@ -2,17 +2,11 @@ package swing;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
-import javax.swing.AbstractButton;
-import javax.swing.JButton;
-import javax.swing.JLabel;
-
 import entidades.Cliente;
 import modelo.Handler;
 
+@SuppressWarnings("serial")
 public class PanelAltaClientes extends PanelGenerico {
-
-	private static final long serialVersionUID = 1L;
 	
 	public PanelAltaClientes(){
 		super();

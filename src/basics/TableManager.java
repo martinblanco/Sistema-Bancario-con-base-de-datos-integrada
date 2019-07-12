@@ -11,16 +11,26 @@ public class TableManager {
 		conectarDB(sql);
 		}
 
-	public void dropClienteTable() throws SQLException {
-		String sql = "DROP TABLE cliente";
-		conectarDB(sql);
-		}
-	
 	public void createCuentaTable() throws SQLException {
 		String sql = "CREATE TABLE cuenta ( id INTEGER IDENTITY, numerocuenta INTEGER, dni INTEGER, cajaahorro FLOAT, cajadolares FLOAT, cuentacorriente FLOAT)";
 		conectarDB(sql);
 		}
-
+	
+	public void createTransaccionTable() throws SQLException {
+		String sql = "CREATE TABLE transaccion ( id INTEGER IDENTITY, numerotransaccion INTEGER, numerocuenta INTEGER, dni INTEGER, monto FLOAT, destino INTEGER)";
+		conectarDB(sql);
+		}
+	
+	public void createTarjetaCreditoTable() throws SQLException {
+		String sql = "CREATE TABLE tarjetacredito ( id INTEGER IDENTITY, numerotarjeta INTEGER, dni INTEGER, numerocuenta INTEGER, apagar FLOAT)";
+		conectarDB(sql);
+		}
+	
+	public void createTarjetaDebitoTable() throws SQLException {
+		String sql = "CREATE TABLE tarjetadebito ( id INTEGER IDENTITY, numerotarjeta INTEGER, dni INTEGER, numerocuenta INTEGER, saldo FLOAT)";
+		conectarDB(sql);
+		}
+	
 	public void conectarDB(String sql) throws SQLException{
 		Connection c = DBManager.connect();
 			try {

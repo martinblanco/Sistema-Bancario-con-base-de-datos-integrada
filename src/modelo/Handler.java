@@ -7,14 +7,29 @@ import swing.*;
 
 import dao.ClienteDao;
 import dao.CuentaDao;
+import dao.TarjetaCreditoDao;
+import dao.TarjetaDebitoDao;
+import dao.TransaccionDao;
 import dbImpl.dao.ClienteDAODBImpl;
 import dbImpl.dao.CuentaDAODBImpl;
+import dbImpl.dao.TarjetaCreditoDAODBImpl;
+import dbImpl.dao.TarjetaDebitoDAODBImpl;
+import dbImpl.dao.TransaccionDAODBImpl;
 import service.ClienteService;
 import service.CuentaService;
+import service.TarjetaCreditoService;
+import service.TarjetaDebitoService;
+import service.TransaccionService;
 import entidades.Cliente;
 import entidades.Cuenta;
+import entidades.TarjetaCredito;
+import entidades.TarjetaDebito;
+import entidades.Transaccion;
 import exceptions.LoginException;
 import exceptions.ServicioException;
+import exceptions.TarjetaCreditoException;
+import exceptions.TarjetaDebitoException;
+import exceptions.TransaccionException;
 import exceptions.ClienteException;
 import exceptions.CuentaException;
 
@@ -22,6 +37,9 @@ import exceptions.CuentaException;
 public class Handler {
 	private ClienteService cliente;
 	private CuentaService cuenta;
+	private TransaccionService transaccion;
+	private TarjetaCreditoService tarjetacredito;
+	private TarjetaDebitoService tarjetadebito;
 	private MiFrame miFrame;
 	private int dniCliente;
 
@@ -32,7 +50,23 @@ public class Handler {
 			
 			CuentaDao cuentaDao = new CuentaDAODBImpl();
 			CuentaService cuentaService = new CuentaService(cuentaDao);
-			setCuenta(cuentaService);	
+			setCuenta(cuentaService);
+			
+			TransaccionDao transaccionDao = new TransaccionDAODBImpl();
+			TransaccionService transaccionService = new TransaccionService(transaccionDao);
+			setTransaccion(transaccionService);	
+			
+			TarjetaCreditoDao tarjetacreditoDao = new TarjetaCreditoDAODBImpl();
+			TarjetaCreditoService tarjetacreditoService = new TarjetaCreditoService(tarjetacreditoDao);
+			setTargetaCredito(tarjetacreditoService);	
+			
+			TarjetaDebitoDao tarjetaDebitoDao = new TarjetaDebitoDAODBImpl();
+			TarjetaDebitoService tarjetaDebitoService = new TarjetaDebitoService(tarjetaDebitoDao);
+			setTargetaDebito(tarjetaDebitoService);	
+	}
+	
+	public void setMiFrame(MiFrame miFrame){
+		this.miFrame = miFrame;
 	}
 	
 	public ClienteService getCliente() {
@@ -51,10 +85,31 @@ public class Handler {
 		this.cuenta = cuenta;
 	}
 	
-	public void setMiFrame(MiFrame miFrame){
-		this.miFrame = miFrame;
+	public TransaccionService getTransaccion() {
+		return transaccion;
+	}
+
+	public void setTransaccion(TransaccionService transaccion) {
+		this.transaccion = transaccion;
 	}
 	
+	public TarjetaCreditoService getTargetaCredito() {
+		return tarjetacredito;
+	}
+
+	public void setTargetaCredito(TarjetaCreditoService tarjetacredito) {
+		this.tarjetacredito = tarjetacredito;
+	}
+	
+	public TarjetaDebitoService getTargetaDebito() {
+		return tarjetadebito;
+	}
+
+	public void setTargetaDebito(TarjetaDebitoService tarjetadebito) {
+		this.tarjetadebito = tarjetadebito;
+	}
+	
+
 	//////////////////////////// Paneles Clientes
 	
 	public void altaCliente(Cliente miCliente){
@@ -77,13 +132,8 @@ public class Handler {
 		PanelAltaClientes miPanelAlta = new PanelAltaClientes();
 		miPanelAlta.setHandler(this);
 		miFrame.setPanel(miPanelAlta);
-		
-	}public void mostrarError(String error){
-		JOptionPane.showMessageDialog(null,error,"Error",JOptionPane.ERROR_MESSAGE);
 	}
-	public void mostrarSucces(String exito){
-		JOptionPane.showMessageDialog(null,exito,"Exito",JOptionPane.INFORMATION_MESSAGE);
-	}
+
 
 	public void mostarMiPanelClientes(){
 		PanelClientes miLista = new PanelClientes(this);
@@ -141,35 +191,6 @@ public class Handler {
 		}
 	}	
 	
-	public int getDniCliente() {
-		return dniCliente;
-	}
-
-	public void setDniCliente(int dniCliente) {
-		this.dniCliente = dniCliente;
-	}	
-	
-	///////////////////Login
-	
-	public boolean validarLogin(int index, String pass) {
-		boolean caso = false;
-		try {
-			caso = cliente.validarLogin(index, pass);
-			mostrarSucces("Login Exitoso");	
-			if(index == 2){
-				miFrame.setMenuUsuario();
-				setDniCliente(Integer.parseInt(pass));
-				miFrame.setVisible(true);
-			} else {
-				miFrame.setMenuAdmin();
-				miFrame.setVisible(true);
-			}
-		} catch (LoginException e) {
-			mostrarError(e.getMessage());
-		}
-		return caso;
-	}
-
 	////////////////////////////////////////////////////////////Cuentas
 	
 	public void mostrarPanelAltaCuentas(){
@@ -248,4 +269,262 @@ public class Handler {
 		}
 	}	
 	
+	///////////////////////////////////////////////////////// TRANSACCIONES
+	
+	public void mostrarPanelTransaccion(){
+		PanelTransacciones transaccion = new PanelTransacciones(this);
+		miFrame.setPanel(transaccion);
+	}
+	
+	public void mostrarPanelCuentasTransaccion(){
+		PanelCuentasTransaccion transaccion = new PanelCuentasTransaccion(this);
+		miFrame.setPanel(transaccion);
+	}
+	
+	public void mostarMiPanelNuevaTransaccion(Cuenta miCuenta){
+		PanelNuevaTransaccion miPanelTransaccion = new PanelNuevaTransaccion();
+		miPanelTransaccion.setHandler(this);
+		miPanelTransaccion.nuevaTransaccion(miCuenta);
+		miFrame.setPanel(miPanelTransaccion);
+	}
+
+	public List<Transaccion> mostrarTodosTransacciones(){
+		List<Transaccion> miLista = new ArrayList<Transaccion>();
+		try {
+			miLista.addAll(transaccion.listarTransaccion());
+		} catch (ServicioException e) {
+			mostrarError(e.getMessage());
+			e.printStackTrace();
+		}
+		return miLista;
+	}
+	
+	public Transaccion buscarTransaccion(int numeroTransaccion){
+		Transaccion transaccionbuscada = null;
+		try {
+			transaccionbuscada = transaccion.consultarTransaccion(numeroTransaccion);
+		} catch (ServicioException e) {
+			mostrarError(e.getMessage());
+		}
+		return transaccionbuscada;
+	}
+	
+	public void bajaTransaccion(int numeroTransaccion){
+		try {
+			transaccion.eliminarTransaccion(numeroTransaccion);
+			mostrarPanelTransaccion();
+		} catch (TransaccionException e) {
+			mostrarError(e.getMessage());
+		} catch (ServicioException e) {
+			mostrarError(e.getMessage());
+		}
+		
+	}
+	
+	public void altaTransaccion(Transaccion miTransaccion){
+		try {
+			transaccion.altaTransaccion(miTransaccion);
+			mostrarSucces("Se ha realizado la Transaccion: " + miTransaccion.getNumeroTransaccion());
+			if(JOptionPane.showConfirmDialog(null, "Quiere seguir realizando transacciones?") == 1){
+				mostrarPanelTransaccion();
+			} else
+				mostrarPanelCuentasTransaccion();
+		} catch (ServicioException e) {
+			e.printStackTrace();
+		} catch (TransaccionException e) {
+			mostrarError(e.getMessage());
+		}
+	}
+	
+	/////////////////////////////////////////////////////////////TARJETAS DE CREDITO
+	
+	public void mostrarPanelTarjetaCredito(){
+		PanelTarjetaCredito tarjeta = new PanelTarjetaCredito(this);
+		miFrame.setPanel(tarjeta);
+	}
+
+	public void mostarMiPanelAltaTarjetaCredito(){
+		PanelAltaTarjetaCredito miPanelAlta = new PanelAltaTarjetaCredito();
+		miPanelAlta.setHandler(this);
+		miFrame.setPanel(miPanelAlta);
+	}
+	
+	public void mostarMiPanelModificaTarjetaCredito(TarjetaCredito miTarjeta){
+		PanelModificacionTarjetaCredito miPanelModificacion = new PanelModificacionTarjetaCredito();
+		miPanelModificacion.setHandler(this);
+		miPanelModificacion.editarTarjetaCredito(miTarjeta);
+		miFrame.setPanel(miPanelModificacion);
+	}
+	
+	public List<TarjetaCredito> mostrarTodosTarjetasCredito(){
+		List<TarjetaCredito> miLista = new ArrayList<TarjetaCredito>();
+		try {
+			miLista.addAll(tarjetacredito.listarTarjetaCredito());
+		} catch (ServicioException e) {
+			mostrarError(e.getMessage());
+			e.printStackTrace();
+		}
+		return miLista;
+	}
+	
+	public TarjetaCredito buscarTarjetaCredito(int numeroTarjeta){
+		TarjetaCredito tarjetabuscada = null;
+		try {
+			tarjetabuscada = tarjetacredito.consultarTarjetaCredito(numeroTarjeta);
+		} catch (ServicioException e) {
+			mostrarError(e.getMessage());
+		}
+		return tarjetabuscada;
+	}
+	
+	public void bajaTarjetaCredito(int numeroTarjeta){
+		try {
+			tarjetacredito.eliminarTarjetaCredito(numeroTarjeta);
+			mostrarPanelTarjetaCredito();
+		} catch (TarjetaCreditoException e) {
+			mostrarError(e.getMessage());
+		} catch (ServicioException e) {
+			mostrarError(e.getMessage());
+		}
+		
+	}
+	
+	public void altaTarjetaCredito(TarjetaCredito miTarjetaCredito){
+		try {
+			tarjetacredito.altaTarjetaCredito(miTarjetaCredito);
+			mostrarSucces("Se ha dado de alta la Tarjeta de Credito: " + miTarjetaCredito.getNumeroTarjeta());
+			if(JOptionPane.showConfirmDialog(null, "Quiere seguir ingresando Tarjetas?") == 1){
+				mostrarPanelTarjetaCredito();
+			} else
+				mostarMiPanelAltaTarjetaCredito();
+		} catch (ServicioException e) {
+			e.printStackTrace();
+		} catch (TarjetaCreditoException e) {
+			mostrarError(e.getMessage());
+		}
+	}
+	
+	public void modificarTarjetaCredito(int numeroTarjeta, float apagar){
+		try {
+			tarjetacredito.modificarTarjetaCredito(numeroTarjeta,apagar);
+			mostrarPanelTarjetaCredito();
+		} catch (ServicioException e) {
+			mostrarError(e.getMessage());
+			e.printStackTrace();
+		}
+	}
+	
+	/////////////////////////////////////////////////////////// Tarjeta de Debito
+	public void mostrarPanelTarjetaDebito(){
+		PanelTarjetaDebito tarjeta = new PanelTarjetaDebito(this);
+		miFrame.setPanel(tarjeta);
+	}
+
+	public void mostarMiPanelAltaTarjetaDebito(){
+		PanelAltaTarjetaDebito miPanelAlta = new PanelAltaTarjetaDebito();
+		miPanelAlta.setHandler(this);
+		miFrame.setPanel(miPanelAlta);
+	}
+	
+	public void mostarMiPanelModificaTarjetaDebito(TarjetaDebito miTarjeta){
+		PanelModificacionTarjetaDebito miPanelModificacion = new PanelModificacionTarjetaDebito();
+		miPanelModificacion.setHandler(this);
+		miPanelModificacion.editarTarjetaDebito(miTarjeta);
+		miFrame.setPanel(miPanelModificacion);
+	}
+	
+	public List<TarjetaDebito> mostrarTodosTarjetasDebito(){
+		List<TarjetaDebito> miLista = new ArrayList<TarjetaDebito>();
+		try {
+			miLista.addAll(tarjetadebito.listarTarjetaDebito());
+		} catch (ServicioException e) {
+			mostrarError(e.getMessage());
+			e.printStackTrace();
+		}
+		return miLista;
+	}
+	
+	public TarjetaDebito buscarTarjetaDebito(int numeroTarjeta){
+		TarjetaDebito tarjetabuscada = null;
+		try {
+			tarjetabuscada = tarjetadebito.consultarTarjetaDebito(numeroTarjeta);
+		} catch (ServicioException e) {
+			mostrarError(e.getMessage());
+		}
+		return tarjetabuscada;
+	}
+	
+	public void bajaTarjetaDebito(int numeroTarjeta){
+		try {
+			tarjetadebito.eliminarTarjetaDebito(numeroTarjeta);
+			mostrarPanelTarjetaDebito();
+		} catch (TarjetaDebitoException e) {
+			mostrarError(e.getMessage());
+		} catch (ServicioException e) {
+			mostrarError(e.getMessage());
+		}
+	}
+	
+	public void altaTarjetaDebito(TarjetaDebito miTarjetaDebito){
+		try {
+			tarjetadebito.altaTarjetaDebito(miTarjetaDebito);
+			mostrarSucces("Se ha dado de alta la Tarjeta de Debito: " + miTarjetaDebito.getNumeroTarjeta());
+			if(JOptionPane.showConfirmDialog(null, "Quiere seguir ingresando Tarjetas?") == 1){
+				mostrarPanelTarjetaDebito();
+			} else
+				mostarMiPanelAltaTarjetaDebito();
+		} catch (ServicioException e) {
+			e.printStackTrace();
+		} catch (TarjetaDebitoException e) {
+			mostrarError(e.getMessage());
+		}
+	}
+	
+	public void modificarTarjetaDebito(int numeroTarjeta, float apagar){
+		try {
+			tarjetadebito.modificarTarjetaDebito(numeroTarjeta,apagar);
+			mostrarPanelTarjetaDebito();
+		} catch (ServicioException e) {
+			mostrarError(e.getMessage());
+			e.printStackTrace();
+		}
+	}
+	////////////////////////////////////////////////////////////Mensajes
+	
+	public void mostrarError(String error){
+		JOptionPane.showMessageDialog(null,error,"Error",JOptionPane.ERROR_MESSAGE);
+	}
+	
+	public void mostrarSucces(String exito){
+		JOptionPane.showMessageDialog(null,exito,"Exito",JOptionPane.INFORMATION_MESSAGE);
+	}
+	
+	/////////////////////////////////////////////////////////////////////////Login
+	
+	public int getDniCliente() {
+		return dniCliente;
+	}
+
+	public void setDniCliente(int dniCliente) {
+		this.dniCliente = dniCliente;
+	}
+	
+	public boolean validarLogin(int index, String pass) {
+		boolean caso = false;
+		try {
+			caso = cliente.validarLogin(index, pass);
+			mostrarSucces("Login Exitoso");	
+			if(index == 2){
+				miFrame.setMenuUsuario();
+				setDniCliente(Integer.parseInt(pass));
+				miFrame.setVisible(true);
+			} else {
+				miFrame.setMenuAdmin();
+				miFrame.setVisible(true);
+			}
+		} catch (LoginException e) {
+			mostrarError(e.getMessage());
+		}
+		return caso;
+	}
 }

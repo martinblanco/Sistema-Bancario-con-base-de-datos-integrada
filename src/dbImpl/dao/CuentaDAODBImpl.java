@@ -103,10 +103,7 @@ public class CuentaDAODBImpl extends DAODBImpl implements CuentaDao{
 	                float rscajaahorro = rs.getFloat("cajahorro");
 	                float recajadolares = rs.getFloat("cajadolares");
 	                float recuentacorriente = rs.getFloat("cuentacorriente");
-					resultado.setCajaAhorros(rscajaahorro);
-					resultado.setCajaDolares(recajadolares);
-					resultado.setCuentaCorriente(recuentacorriente);
-					resultado.setDniCliente(rsdni);
+	                resultado = new Cuenta(rsnumerocuenta,rsdni,rscajaahorro,recajadolares,recuentacorriente);
 	            }
 	        } catch (SQLException e) {
 	            rollbackDB(c);

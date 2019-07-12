@@ -6,6 +6,8 @@ import java.awt.event.ActionListener;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 
+import entidades.Cuenta;
+
 @SuppressWarnings("serial")
 public class PanelModificacionCuenta extends PanelGenerico {
 	public PanelModificacionCuenta(){
@@ -33,7 +35,7 @@ public class PanelModificacionCuenta extends PanelGenerico {
 						PanelModificacionCuenta.this.miHandler.mostrarError("No puede ingresar valores negativos a la caja ");
 				} catch (NumberFormatException e1) {
 					e1.printStackTrace();
-					PanelModificacionCuenta.this.miHandler.mostrarError("Ingrese valores numericos wachin ");
+					PanelModificacionCuenta.this.miHandler.mostrarError("Ingrese valores numericos");
 				}
 			}
 		});
@@ -54,6 +56,14 @@ public class PanelModificacionCuenta extends PanelGenerico {
 		titulo = "Panel Modificacion de Cuentas";
 		return super.setTitulo(titulo);
 	}
+	
+	   public void editarCuenta(Cuenta miCuenta){
+			 textNumeroCuenta.setText(miCuenta.getNumeroCuenta()+"");
+			 textNumeroCuenta.setEditable(false);
+			 textCajaAhorro.setText(miCuenta.getCajaAhorros()+"");
+			 textCuentaCorriente.setText(miCuenta.getCuentaCorriente()+"");
+			 textCajaDolares.setText(miCuenta.getCajaDolares()+"");
+		   }
 	
 	@Override
 	protected void agregarBotones() {

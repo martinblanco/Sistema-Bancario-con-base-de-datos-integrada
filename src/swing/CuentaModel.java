@@ -6,9 +6,9 @@ import javax.swing.table.AbstractTableModel;
 
 import entidades.Cuenta;
 
+@SuppressWarnings("serial")
 public class CuentaModel extends AbstractTableModel {
 
-	private static final long serialVersionUID = 1L;
 	private List<Cuenta> cuenta;
 	private static final int NROCUENTA = 0;
 	private static final int DNI = 1; 
@@ -52,6 +52,4 @@ public class CuentaModel extends AbstractTableModel {
 		return titulos[column];
 	}
 	
-
-
 }

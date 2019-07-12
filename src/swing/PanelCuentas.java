@@ -6,6 +6,7 @@ import javax.swing.JTable;
 
 import modelo.Handler;
 
+@SuppressWarnings("serial")
 public class PanelCuentas extends PanelClientes{
 	
 	public PanelCuentas(Handler miCoordinador) {

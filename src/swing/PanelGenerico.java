@@ -1,16 +1,12 @@
 package swing;
 
 import java.awt.GridBagConstraints;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
-
 import entidades.Cliente;
-import entidades.Cuenta;
 import modelo.Handler;
 
 public abstract class PanelGenerico extends JPanel {
@@ -50,8 +46,6 @@ public abstract class PanelGenerico extends JPanel {
        setBackground(new java.awt.Color(204, 204, 204));
        setLayout(new java.awt.GridBagLayout());
 
-
-       labelTitulo.setFont(new java.awt.Font("Monaco", 0, 24)); 
        labelTitulo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
        labelTitulo.setText(setTitulo("Panel Modifica "));
        labelTitulo.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
@@ -80,14 +74,6 @@ public abstract class PanelGenerico extends JPanel {
    	textDni.setEditable(false);
    	textApellido.setText(miCliente.getApellido());
    	textNombre.setText(miCliente.getNombre());
-   }
-   
-   public void editarCuenta(Cuenta miCuenta){
-	 textNumeroCuenta.setText(miCuenta.getNumeroCuenta()+"");
-	 textNumeroCuenta.setEditable(false);
-	 textCajaAhorro.setText(miCuenta.getCajaAhorros()+"");
-	 textCuentaCorriente.setText(miCuenta.getCuentaCorriente()+"");
-	 textCajaDolares.setText(miCuenta.getCajaDolares()+"");
    }
    
    public void setBotonAplicar(){

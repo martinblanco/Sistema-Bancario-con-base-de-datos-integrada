@@ -24,7 +24,6 @@ public class CuentaService {
 		try {
 			if(dao.consultarCuenta(miCuenta.getNumeroCuenta()).getNumeroCuenta() == 0){
 				dao.insertarCuenta(miCuenta);
-				System.out.println(dao.consultarCuenta(miCuenta.getNumeroCuenta()).getNumeroCuenta());
 			} else
 				throw new CuentaException("La cuenta ya existe en la base de datos");
 		} catch (DAOException e) {

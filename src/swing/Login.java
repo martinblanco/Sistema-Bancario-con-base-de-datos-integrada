@@ -7,6 +7,7 @@ import java.awt.event.ActionListener;
 
 import modelo.Handler;
 
+@SuppressWarnings("serial")
 public class Login extends javax.swing.JDialog {
 
     private javax.swing.JButton botonAceptar;

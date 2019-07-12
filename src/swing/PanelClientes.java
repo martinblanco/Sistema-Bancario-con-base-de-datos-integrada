@@ -34,7 +34,7 @@ public class PanelClientes extends JPanel {
     	initComponents();
     }
     
-	private void initComponents() {
+	protected void initComponents() {
         java.awt.GridBagConstraints gridBagConstraints;
         panelGeneral = new JPanel();
         botonModificar = new JButton();

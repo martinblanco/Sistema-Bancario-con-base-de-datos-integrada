@@ -2,11 +2,8 @@ package swing;
 
 import java.awt.BorderLayout;
 import java.awt.CardLayout;
-import java.awt.Color;
-import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
 import javax.swing.BorderFactory;
 import javax.swing.JLabel;
 import javax.swing.JMenu;
@@ -28,15 +25,14 @@ public class MiFrame extends javax.swing.JFrame {
         initComponents();
         setSize(700,700);
         setLocationRelativeTo(null);
-
     }
     
     public javax.swing.JLabel labelTitulo;
     public javax.swing.JPanel panelPrincipal;
     public javax.swing.JPanel panelTitulo;
     public javax.swing.JScrollPane panelVariable;
-	JMenuItem item1,item2,item3,item4,item5,item6;
-	JMenu menuClientes,homeBanking,menuCuentas ;
+	JMenuItem item1,item2,item3,item4,item5,item6,item7,item8,item9,item10,item11;
+	JMenu menuClientes,homeBanking,menuCuentas,menuTransacciones,menuTarjetaCredito,menuTarjetaDebito ;
 	JMenuBar menuBar;
 
 	//PanelUsuarios panel;
@@ -133,18 +129,93 @@ public class MiFrame extends javax.swing.JFrame {
     	menuCuentas.add(item3);
     	menuCuentas.add(item4);
     	
-    	homeBanking = new JMenu("Home Banking");
-    	menuBar.add(homeBanking);
-    	item5 = new JMenuItem("Abrir HomeBanking");
-    	/*item5.addActionListener(new ActionListener() {
+    	menuTransacciones = new JMenu("Transacciones");
+    	menuBar.add(menuTransacciones);
+    	item5 = new JMenuItem("Nueva Transaccion");
+    	item5.addActionListener(new ActionListener() {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				MiFrame.this.miHandler.mostrarHomeBanking();
-
+					if(MiFrame.this.miHandler.mostrarTodosCuentas().isEmpty() == true){
+						MiFrame.this.miHandler.mostrarError("No se puede realizar transaccion ya que no hay cuentas ingresadas");
+					}else
+						MiFrame.this.miHandler.mostrarPanelCuentasTransaccion();
 			}
-		});*/
-    	homeBanking.add(item5);
+		});
+    	item6 = new JMenuItem("Todas Las Transacciones");
+    	item6.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+					if(MiFrame.this.miHandler.mostrarTodosTransacciones().isEmpty() == true){
+						MiFrame.this.miHandler.mostrarError("No se puede mostrar el panel ya que no hay Transacciones realizadas ");
+					}else
+						MiFrame.this.miHandler.mostrarPanelTransaccion();
+			}
+		});
+    	menuTransacciones.add(item5);
+    	menuTransacciones.add(item6);
+    	
+    	menuTarjetaCredito = new JMenu("Tarjeta de Credito");
+    	menuBar.add(menuTarjetaCredito);
+    	item8 = new JMenuItem("Consultar Todas las Tarjetas de Creditos");
+    	item8.addActionListener(new ActionListener() {
+		
+		@Override
+			public void actionPerformed(ActionEvent e) {
+					if(MiFrame.this.miHandler.mostrarTodosTarjetasCredito().isEmpty() == true){
+						MiFrame.this.miHandler.mostrarError("No se puede realizar transaccion ya que no hay Tarjetas de credito ingresadas");
+					}else
+						MiFrame.this.miHandler.mostrarPanelTarjetaCredito();
+			}
+		});
+    	item9 = new JMenuItem("Alta Tarjeta de Credito");
+    	item9.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				MiFrame.this.miHandler.mostarMiPanelAltaTarjetaCredito();
+			}
+		});
+    	menuTarjetaCredito.add(item8);
+    	menuTarjetaCredito.add(item9);
+    	
+    	menuTarjetaDebito = new JMenu("Tarjeta de Debito");
+    	menuBar.add(menuTarjetaDebito);
+    	item10 = new JMenuItem("Consultar Todas las Tarjetas de Debito");
+    	item10.addActionListener(new ActionListener() {
+		
+		@Override
+			public void actionPerformed(ActionEvent e) {
+					if(MiFrame.this.miHandler.mostrarTodosTarjetasDebito().isEmpty() == true){
+						MiFrame.this.miHandler.mostrarError("No se puede realizar transaccion ya que no hay Tarjetas de debito ingresadas");
+					}else
+						MiFrame.this.miHandler.mostrarPanelTarjetaDebito();
+			}
+		});
+    	item11 = new JMenuItem("Alta Tarjeta de Debito");
+    	item11.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				MiFrame.this.miHandler.mostarMiPanelAltaTarjetaDebito();
+			}
+		});
+    	menuTarjetaDebito.add(item10);
+    	menuTarjetaDebito.add(item11);
+    	
+    	homeBanking = new JMenu("Home Banking");
+    	menuBar.add(homeBanking);
+    	item7 = new JMenuItem("Abrir HomeBanking");
+//    	/*item7.addActionListener(new ActionListener() {
+//			
+//			@Override
+//			public void actionPerformed(ActionEvent e) {
+//				MiFrame.this.miHandler.mostrarHomeBanking();
+//
+//			}
+//		});*/
+    	homeBanking.add(item7);
     	
     	return menuBar;
     }
@@ -152,11 +223,12 @@ public class MiFrame extends javax.swing.JFrame {
     public void setMenuUsuario(){
     	menuClientes.setEnabled(false);
     	menuCuentas.setEnabled(false);
+    	menuTransacciones.setEnabled(false);
+    	menuTarjetaCredito.setEnabled(false);
     }
     
     public void setMenuAdmin(){
     	homeBanking.setEnabled(false);
     }
         
-
 }
