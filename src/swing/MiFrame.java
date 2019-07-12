@@ -207,14 +207,14 @@ public class MiFrame extends javax.swing.JFrame {
     	homeBanking = new JMenu("Home Banking");
     	menuBar.add(homeBanking);
     	item7 = new JMenuItem("Abrir HomeBanking");
-//    	/*item7.addActionListener(new ActionListener() {
-//			
-//			@Override
-//			public void actionPerformed(ActionEvent e) {
-//				MiFrame.this.miHandler.mostrarHomeBanking();
-//
-//			}
-//		});*/
+    	item7.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				MiFrame.this.miHandler.mostrarHomeBanking();
+
+			}
+		});
     	homeBanking.add(item7);
     	
     	return menuBar;
@@ -225,6 +225,7 @@ public class MiFrame extends javax.swing.JFrame {
     	menuCuentas.setEnabled(false);
     	menuTransacciones.setEnabled(false);
     	menuTarjetaCredito.setEnabled(false);
+    	menuTarjetaDebito.setEnabled(false);
     }
     
     public void setMenuAdmin(){

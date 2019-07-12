@@ -64,6 +64,16 @@ public class TransaccionService {
 		return listarTransaccion;
 	}
 	
+	public List<Transaccion> listarTransaccion(int dni) throws ServicioException{
+		List<Transaccion> listarTransaccion = new ArrayList<Transaccion>();
+		try {
+			listarTransaccion.addAll(dao.listarTransaccion(dni));
+		} catch (DAOException e) {
+			throw new ServicioException("Error al Listar las Transacciones");
+		}
+		return listarTransaccion;
+	}
+	
 	public List<Transaccion> listarTransaccionDni(int dni) throws ServicioException{
 		List<Transaccion> listarTransaccion = new ArrayList<Transaccion>();
 		try {
@@ -73,14 +83,5 @@ public class TransaccionService {
 		}
 		return listarTransaccion;
 	}
-
-
-//	public void modificarCuenta(int numeroCuenta, float cuentacorriente, float cajaahorro, float cajadolares) throws ServicioException{
-//        try {
-//			dao.modificarCuenta(numeroCuenta,cuentacorriente,cajaahorro,cajadolares);
-//		} catch (DAOException e) {
-//			throw new ServicioException("Error modificar cliente");
-//		}
-//	}
-
+	
 }

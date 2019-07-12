@@ -24,6 +24,8 @@ public class PanelTarjetaDebito extends PanelClientes{
 				try {
 				int numerotarjeta = (miHandler.mostrarTodosTarjetasDebito().get(listaUsuarios.getSelectedRow()).getNumeroTarjeta());
 				miHandler.bajaTarjetaDebito(numerotarjeta);
+				PanelTarjetaDebito.this.miHandler.mostrarSucces("Correcto");
+				PanelTarjetaDebito.this.miHandler.mostrarPanelTarjetaDebito();
 				} catch (ArrayIndexOutOfBoundsException e1) {
     				miHandler.mostrarError("Seleccione una opcion");
     			}

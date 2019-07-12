@@ -33,7 +33,6 @@ import exceptions.TransaccionException;
 import exceptions.ClienteException;
 import exceptions.CuentaException;
 
-
 public class Handler {
 	private ClienteService cliente;
 	private CuentaService cuenta;
@@ -138,7 +137,6 @@ public class Handler {
 	public void mostarMiPanelClientes(){
 		PanelClientes miLista = new PanelClientes(this);
 		miFrame.setPanel(miLista);
-
 	}
 	
 	public void mostarMiPanelModificaCliente(Cliente miCliente){
@@ -222,6 +220,17 @@ public class Handler {
 		return miLista;
 	}
 	
+	public List<Cuenta> mostrarTodosCuentas(int dni){
+		List<Cuenta> miLista = new ArrayList<Cuenta>();
+		try {
+			miLista.addAll(cuenta.listarCuentas(dni));
+		} catch (ServicioException e) {
+			mostrarError(e.getMessage());
+			e.printStackTrace();
+		}
+		return miLista;
+	}
+	
 	public Cuenta buscarCuenta(int numeroCuenta){
 		Cuenta cuentabuscada = null;
 		try {
@@ -244,14 +253,21 @@ public class Handler {
 		
 	}
 	
+	public void bajaCuenta(int numeroCuenta, int dni){
+		try {
+			cuenta.eliminarCuenta(numeroCuenta);
+		} catch (CuentaException e) {
+			mostrarError(e.getMessage());
+		} catch (ServicioException e) {
+			mostrarError(e.getMessage());
+		}
+		
+	}
+	
 	public void altaCuenta(Cuenta miCuenta){
 		try {
 			cuenta.altaCuenta(miCuenta);
-			mostrarSucces("Se ha dado de alta la el Numero de Cuenta: " + miCuenta.getNumeroCuenta());
-			if(JOptionPane.showConfirmDialog(null, "Quiere seguir ingresando Cuentas?") == 1){
-				mostrarPanelAltaCuentas();
-			} else
-				mostrarPanelCuentas();
+			mostrarSucces("Se ha dado de alta a la Cuenta: " + miCuenta.getNumeroCuenta());
 		} catch (ServicioException e) {
 			e.printStackTrace();
 		} catch (CuentaException e) {
@@ -262,12 +278,20 @@ public class Handler {
 	public void modificarCuenta(int numeroCuenta, float cuentacorriente, float cajaahorro, float cajadolares){
 		try {
 			cuenta.modificarCuenta(numeroCuenta,cuentacorriente,cajaahorro,cajadolares);
-			mostrarPanelCuentas();
 		} catch (ServicioException e) {
 			mostrarError(e.getMessage());
 			e.printStackTrace();
 		}
 	}	
+	
+	public void depositarCuenta(int numeroCuenta, float cuentacorriente, float cajaahorro, float cajadolares){
+		try {
+			cuenta.depositarCuenta(numeroCuenta,cuentacorriente,cajaahorro,cajadolares);
+		} catch (ServicioException e) {
+			mostrarError(e.getMessage());
+			e.printStackTrace();
+		}
+	}
 	
 	///////////////////////////////////////////////////////// TRANSACCIONES
 	
@@ -292,6 +316,17 @@ public class Handler {
 		List<Transaccion> miLista = new ArrayList<Transaccion>();
 		try {
 			miLista.addAll(transaccion.listarTransaccion());
+		} catch (ServicioException e) {
+			mostrarError(e.getMessage());
+			e.printStackTrace();
+		}
+		return miLista;
+	}
+	
+	public List<Transaccion> mostrarTodosTransacciones(int dni){
+		List<Transaccion> miLista = new ArrayList<Transaccion>();
+		try {
+			miLista.addAll(transaccion.listarTransaccion(dni));
 		} catch (ServicioException e) {
 			mostrarError(e.getMessage());
 			e.printStackTrace();
@@ -325,10 +360,6 @@ public class Handler {
 		try {
 			transaccion.altaTransaccion(miTransaccion);
 			mostrarSucces("Se ha realizado la Transaccion: " + miTransaccion.getNumeroTransaccion());
-			if(JOptionPane.showConfirmDialog(null, "Quiere seguir realizando transacciones?") == 1){
-				mostrarPanelTransaccion();
-			} else
-				mostrarPanelCuentasTransaccion();
 		} catch (ServicioException e) {
 			e.printStackTrace();
 		} catch (TransaccionException e) {
@@ -367,6 +398,17 @@ public class Handler {
 		return miLista;
 	}
 	
+	public List<TarjetaCredito> mostrarTodosTarjetasCredito(int dni){
+		List<TarjetaCredito> miLista = new ArrayList<TarjetaCredito>();
+		try {
+			miLista.addAll(tarjetacredito.listarTarjetaCredito(dni));
+		} catch (ServicioException e) {
+			mostrarError(e.getMessage());
+			e.printStackTrace();
+		}
+		return miLista;
+	}
+	
 	public TarjetaCredito buscarTarjetaCredito(int numeroTarjeta){
 		TarjetaCredito tarjetabuscada = null;
 		try {
@@ -380,23 +422,17 @@ public class Handler {
 	public void bajaTarjetaCredito(int numeroTarjeta){
 		try {
 			tarjetacredito.eliminarTarjetaCredito(numeroTarjeta);
-			mostrarPanelTarjetaCredito();
 		} catch (TarjetaCreditoException e) {
 			mostrarError(e.getMessage());
 		} catch (ServicioException e) {
 			mostrarError(e.getMessage());
 		}
-		
 	}
 	
 	public void altaTarjetaCredito(TarjetaCredito miTarjetaCredito){
 		try {
 			tarjetacredito.altaTarjetaCredito(miTarjetaCredito);
 			mostrarSucces("Se ha dado de alta la Tarjeta de Credito: " + miTarjetaCredito.getNumeroTarjeta());
-			if(JOptionPane.showConfirmDialog(null, "Quiere seguir ingresando Tarjetas?") == 1){
-				mostrarPanelTarjetaCredito();
-			} else
-				mostarMiPanelAltaTarjetaCredito();
 		} catch (ServicioException e) {
 			e.printStackTrace();
 		} catch (TarjetaCreditoException e) {
@@ -407,7 +443,15 @@ public class Handler {
 	public void modificarTarjetaCredito(int numeroTarjeta, float apagar){
 		try {
 			tarjetacredito.modificarTarjetaCredito(numeroTarjeta,apagar);
-			mostrarPanelTarjetaCredito();
+		} catch (ServicioException e) {
+			mostrarError(e.getMessage());
+			e.printStackTrace();
+		}
+	}
+	
+	public void pagarTarjetaCredito(int numeroTarjeta, float apagar){
+		try {
+			tarjetacredito.pagarTarjetaCredito(numeroTarjeta,apagar);
 		} catch (ServicioException e) {
 			mostrarError(e.getMessage());
 			e.printStackTrace();
@@ -444,6 +488,17 @@ public class Handler {
 		return miLista;
 	}
 	
+	public List<TarjetaDebito> mostrarTodosTarjetasDebito(int dni){
+		List<TarjetaDebito> miLista = new ArrayList<TarjetaDebito>();
+		try {
+			miLista.addAll(tarjetadebito.listarTarjetaDebito(dni));
+		} catch (ServicioException e) {
+			mostrarError(e.getMessage());
+			e.printStackTrace();
+		}
+		return miLista;
+	}
+	
 	public TarjetaDebito buscarTarjetaDebito(int numeroTarjeta){
 		TarjetaDebito tarjetabuscada = null;
 		try {
@@ -457,7 +512,6 @@ public class Handler {
 	public void bajaTarjetaDebito(int numeroTarjeta){
 		try {
 			tarjetadebito.eliminarTarjetaDebito(numeroTarjeta);
-			mostrarPanelTarjetaDebito();
 		} catch (TarjetaDebitoException e) {
 			mostrarError(e.getMessage());
 		} catch (ServicioException e) {
@@ -469,10 +523,6 @@ public class Handler {
 		try {
 			tarjetadebito.altaTarjetaDebito(miTarjetaDebito);
 			mostrarSucces("Se ha dado de alta la Tarjeta de Debito: " + miTarjetaDebito.getNumeroTarjeta());
-			if(JOptionPane.showConfirmDialog(null, "Quiere seguir ingresando Tarjetas?") == 1){
-				mostrarPanelTarjetaDebito();
-			} else
-				mostarMiPanelAltaTarjetaDebito();
 		} catch (ServicioException e) {
 			e.printStackTrace();
 		} catch (TarjetaDebitoException e) {
@@ -480,15 +530,100 @@ public class Handler {
 		}
 	}
 	
-	public void modificarTarjetaDebito(int numeroTarjeta, float apagar){
+	public void modificarTarjetaDebito(int numeroTarjeta, float saldo){
 		try {
-			tarjetadebito.modificarTarjetaDebito(numeroTarjeta,apagar);
-			mostrarPanelTarjetaDebito();
+			tarjetadebito.modificarTarjetaDebito(numeroTarjeta,saldo);
 		} catch (ServicioException e) {
 			mostrarError(e.getMessage());
 			e.printStackTrace();
 		}
 	}
+	
+	public void depositarTarjetaDebito(int numeroTarjeta, float saldo){
+		try {
+			tarjetadebito.depositarTarjetaDebito(numeroTarjeta,saldo);
+		} catch (ServicioException e) {
+			mostrarError(e.getMessage());
+			e.printStackTrace();
+		}
+	}
+	//////////////////////////////////////////////////////HomeBanking
+	
+	public void mostrarHomeBanking(){
+		HomeBanking hb = new HomeBanking(this);
+		hb.setTitulo(buscarCliente(getDniCliente()));
+		miFrame.setPanel(hb);	
+	}
+	
+	public void mostrarHomeBankingDepositar(Cuenta miCuenta){
+		HomebankingDepositar miHomeBankingCuentas = new HomebankingDepositar();
+		miHomeBankingCuentas.setHandler(this);
+		miHomeBankingCuentas.editarCuenta(miCuenta);
+		miFrame.setPanel(miHomeBankingCuentas);
+	}
+	
+	public void mostrarHomeBankingCuentas(int dni){
+		HomeBankingCuentas cuentas = new HomeBankingCuentas(this,dni);
+		miFrame.setPanel(cuentas);
+	}
+	
+	public void mostrarHomeBankingAltaCuentas(int dni){
+		PanelAltaCuentas altaCuentas = new PanelAltaCuentas();
+		altaCuentas.setHandler(this);
+		altaCuentas.editarCuenta(dni);
+		miFrame.setPanel(altaCuentas);
+	}
+	
+	public void mostrarHomeBankingTarjetaDebito(int dni){
+		HomeBankingTarjetaDebito tarjeta = new HomeBankingTarjetaDebito(this,dni);
+		miFrame.setPanel(tarjeta);
+	}
+	
+	public void mostrarHomeBankingDepositarDebito(TarjetaDebito miTarjeta){
+		HomeBankingDepositarDebito miHomeBankingCuentas = new HomeBankingDepositarDebito();
+		miHomeBankingCuentas.setHandler(this);
+		miHomeBankingCuentas.editarCuenta(miTarjeta);
+		miFrame.setPanel(miHomeBankingCuentas);
+	}
+	
+	public void mostrarHomeBankingAltaDebito(int dni){
+		PanelAltaTarjetaDebito altaCuentas = new PanelAltaTarjetaDebito();
+		altaCuentas.setHandler(this);
+		altaCuentas.editarTarjeta(dni);
+		miFrame.setPanel(altaCuentas);
+	}
+	
+	public void mostrarHomeBankingTarjetaCredito(int dni){
+		HomeBankingTarjetaCredito tarjeta = new HomeBankingTarjetaCredito(this,dni);
+		miFrame.setPanel(tarjeta);
+	}
+	
+	public void mostrarHomeBankingDepositarCredito(TarjetaCredito miTarjeta){
+		HomeBankingDepositarCredito miHomeBankingCuentas = new HomeBankingDepositarCredito();
+		miHomeBankingCuentas.setHandler(this);
+		miHomeBankingCuentas.editarTarjeta(miTarjeta);
+		miFrame.setPanel(miHomeBankingCuentas);
+	}
+	
+	public void mostrarHomeBankingAltaCredito(int dni){
+		PanelAltaTarjetaCredito altaCuentas = new PanelAltaTarjetaCredito();
+		altaCuentas.setHandler(this);
+		altaCuentas.editarTarjeta(dni);
+		miFrame.setPanel(altaCuentas);
+	}
+		
+	public void mostrarHomeBankingTransaccion(int dni){
+		HomeBankingTransacciones miHomeBankingCuentas = new HomeBankingTransacciones(this,dni);
+		miFrame.setPanel(miHomeBankingCuentas);
+	}
+	
+	public void mostrarHomeBankingNuevaTransaccion(Cuenta miCuenta){
+		PanelNuevaTransaccion altaCuentas = new PanelNuevaTransaccion();
+		altaCuentas.setHandler(this);
+		altaCuentas.nuevaTransaccion(miCuenta);
+		miFrame.setPanel(altaCuentas);
+	}
+	
 	////////////////////////////////////////////////////////////Mensajes
 	
 	public void mostrarError(String error){

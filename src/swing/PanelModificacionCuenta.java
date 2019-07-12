@@ -31,6 +31,8 @@ public class PanelModificacionCuenta extends PanelGenerico {
 					CCD = Float.parseFloat(textCajaDolares.getText());
 					if(CA > 0 || CC > 0 || CCD > 0){
 						PanelModificacionCuenta.this.miHandler.modificarCuenta(NRCUENTA,CC,CA,CCD);
+						PanelModificacionCuenta.this.miHandler.mostrarSucces("Correcto");
+						PanelModificacionCuenta.this.miHandler.mostrarPanelCuentas();
 					} else
 						PanelModificacionCuenta.this.miHandler.mostrarError("No puede ingresar valores negativos a la caja ");
 				} catch (NumberFormatException e1) {

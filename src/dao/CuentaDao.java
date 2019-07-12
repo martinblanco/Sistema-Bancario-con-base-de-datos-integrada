@@ -10,7 +10,9 @@ public interface CuentaDao {
 	public void insertarCuenta(Cuenta cuenta) throws DAOException;
 	public void eliminarCuenta(int numeroCuenta) throws DAOException;
 	public void modificarCuenta(int numeroCuenta, float cajaAhorro, float cajaDolares, float cuentaCorriente) throws DAOException;
+	public void depositarCuenta(int numeroCuenta, float cajaAhorro, float cajaDolares, float cuentaCorriente) throws DAOException;
 	public List<Cuenta> listarCuentas() throws DAOException;
 	public Cuenta consultarCuenta(int numeroCuenta) throws DAOException;
+	public List<Cuenta> listarCuentas(int dni) throws DAOException;
 	
 }

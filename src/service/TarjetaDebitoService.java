@@ -64,9 +64,27 @@ public class TarjetaDebitoService {
 		return listarTarjetaDebito;
 	}
 	
+	public List<TarjetaDebito> listarTarjetaDebito(int dni) throws ServicioException{
+		List<TarjetaDebito> listarTarjetaDebito = new ArrayList<TarjetaDebito>();
+		try {
+			listarTarjetaDebito.addAll(dao.listarTarjetaDebito(dni));
+		} catch (DAOException e) {
+			throw new ServicioException("Error al Listar las Tarjetas de Debito");
+		}
+		return listarTarjetaDebito;
+	}
+	
 	public void modificarTarjetaDebito(int numeroTarjeta, float saldo) throws ServicioException{
         try {
 			dao.modificarTarjetaDebito(numeroTarjeta,saldo);
+		} catch (DAOException e) {
+			throw new ServicioException("Error modificar Saldo Disponible");
+		}
+	}
+	
+	public void depositarTarjetaDebito(int numeroTarjeta, float saldo) throws ServicioException{
+        try {
+			dao.depositarTarjetaDebito(numeroTarjeta,saldo);
 		} catch (DAOException e) {
 			throw new ServicioException("Error modificar Saldo Disponible");
 		}

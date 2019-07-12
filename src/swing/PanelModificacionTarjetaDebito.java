@@ -28,6 +28,8 @@ public class PanelModificacionTarjetaDebito extends PanelGenerico{
 					SALDO = Float.parseFloat(textSaldo.getText());
 					if(SALDO > 0){
 						PanelModificacionTarjetaDebito.this.miHandler.modificarTarjetaDebito(NRTARGETA,SALDO);
+						PanelModificacionTarjetaDebito.this.miHandler.mostrarSucces("Correcto");
+						PanelModificacionTarjetaDebito.this.miHandler.mostrarPanelTarjetaDebito();
 					} else
 						PanelModificacionTarjetaDebito.this.miHandler.mostrarError("No puede ingresar valores negativos a la caja ");
 				} catch (NumberFormatException e1) {

@@ -28,6 +28,8 @@ public class PanelModificacionTarjetaCredito extends PanelGenerico{
 					APAGAR = Float.parseFloat(textApagar.getText());
 					if(APAGAR > 0){
 						PanelModificacionTarjetaCredito.this.miHandler.modificarTarjetaCredito(NRTARGETA,APAGAR);
+						PanelModificacionTarjetaCredito.this.miHandler.mostrarSucces("Correcto");
+						PanelModificacionTarjetaCredito.this.miHandler.mostrarPanelTarjetaCredito();
 					} else
 						PanelModificacionTarjetaCredito.this.miHandler.mostrarError("No puede ingresar valores negativos a la caja ");
 				} catch (NumberFormatException e1) {

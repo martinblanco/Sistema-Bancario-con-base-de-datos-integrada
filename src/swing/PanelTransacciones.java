@@ -26,6 +26,8 @@ public class PanelTransacciones extends PanelClientes{
 				try {
 				int numerotransaccion = (miHandler.mostrarTodosTransacciones().get(listaUsuarios.getSelectedRow()).getNumeroTransaccion());
 				miHandler.bajaTransaccion(numerotransaccion);
+				PanelTransacciones.this.miHandler.mostrarSucces("Correcto");
+				PanelTransacciones.this.miHandler.mostrarPanelTransaccion();
 				} catch (ArrayIndexOutOfBoundsException e1) {
     				miHandler.mostrarError("Seleccione una opcion");
     			}

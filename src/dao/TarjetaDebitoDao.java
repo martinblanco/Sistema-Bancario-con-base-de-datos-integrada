@@ -11,4 +11,6 @@ public interface TarjetaDebitoDao {
 	public void modificarTarjetaDebito(int numeroTarjeta, float saldo) throws DAOException;
 	public List<TarjetaDebito> listarTarjetaDebito() throws DAOException;
 	public TarjetaDebito consultarTarjetaDebito(int numeroTarjeta) throws DAOException;
+	public List<TarjetaDebito> listarTarjetaDebito(int dni) throws DAOException;
+	public void depositarTarjetaDebito(int numeroTarjeta, float saldo) throws DAOException;
 }

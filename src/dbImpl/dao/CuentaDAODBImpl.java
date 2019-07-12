@@ -56,6 +56,19 @@ public class CuentaDAODBImpl extends DAODBImpl implements CuentaDao{
     	}
     }
 	
+	public void depositarCuenta(int numeroCuenta, float cajaAhorro, float cajaDolares, float cuentaCorriente) throws DAOException {
+        String sql = "UPDATE cuenta set cajaahorro = (cajaahorro+'" + cajaAhorro + "') , cajadolares = (cajadolares+'" + cajaDolares + "') , cuentacorriente = (cuentacorriente+'" + cuentaCorriente + "') WHERE numerocuenta = '" + numeroCuenta + "'";
+        Connection c = null;
+        try {
+        	c = coneccionDB(c);
+        	statement(c,sql);
+        } catch (SQLException e) {
+        	throw new DAOException();
+    	}finally {
+    		desconeccionDB(c);
+    	}
+    }
+	
 	@Override
     public List<Cuenta> listarCuentas() throws DAOException {
         List<Cuenta> lista = new ArrayList<>();
@@ -113,4 +126,37 @@ public class CuentaDAODBImpl extends DAODBImpl implements CuentaDao{
 	        return resultado;
 	    }
 	
+		@Override
+	    public List<Cuenta> listarCuentas(int dni) throws DAOException {
+	        List<Cuenta> lista = new ArrayList<>();
+	        String sql = "SELECT * FROM cuenta WHERE dni = '" + dni + "'";
+	        Connection c = null;
+			c = coneccionDB(c);
+			System.out.println(dni+"ultimo");
+	        try {
+	        	System.out.println(dni+"ultimo");
+	        	Cuenta resultado = null;
+	            Statement s = c.createStatement();
+	            System.out.println(dni+"ultimo");
+	            ResultSet rs = s.executeQuery(sql);;
+	            System.out.println(dni+"ultimo");
+	            while (rs.next()) {
+	            	System.out.println("\r\nCuenta Consultada: ");
+	            	System.out.println(rs.getString("numerocuenta") + " " + rs.getString("cajaahorro") + " " + rs.getString("dni") + " " + rs.getString("cajadolares") + " " + rs.getString("cuentacorriente"));
+	            	int rsnumerocuenta = rs.getInt("numerocuenta");
+	            	int rsdni = rs.getInt("dni");
+	            	float rscajaahorro = rs.getFloat("cajaahorro");
+	            	float recajadolares = rs.getFloat("cajadolares");
+	            	float recuentacorriente = rs.getFloat("cuentacorriente");
+					resultado = new Cuenta(rsnumerocuenta,rsdni,rscajaahorro,recajadolares,recuentacorriente);
+					lista.add(resultado);
+	            }    
+	        } catch (SQLException e) {
+	        	rollbackDB(c);
+	        } finally {
+	        	desconeccionDB(c);
+	        }
+	        return lista;
+	    }
+
 }

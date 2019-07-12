@@ -57,13 +57,9 @@ public abstract class PanelGenerico extends JPanel {
        gridBagConstraints.ipady = 5;
        add(labelTitulo, gridBagConstraints);
 
-       botonCancelar.setText("Cancelar");
-       setBotonCancelar();
-       add(botonCancelar, gridText(12, 15));
-
        botonAplicar.setText("Aplicar"); 
        setBotonAplicar();
-       add(botonAplicar, gridText(12,13));
+       add(botonAplicar, gridText(12,14));
        
        agregarBotones();
        

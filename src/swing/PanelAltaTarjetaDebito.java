@@ -32,8 +32,9 @@ public class PanelAltaTarjetaDebito extends PanelGenerico{
 				if ((PanelAltaTarjetaDebito.this.miHandler.buscarCliente(Integer.parseInt(textDni.getText())).getNombre() != null) && 
 					(PanelAltaTarjetaDebito.this.miHandler.buscarCuenta(Integer.parseInt(textNumeroCuenta.getText())).getNumeroCuenta() != 0)) {
 					try {
+						int numerotarjeta = (int) Math.floor(Math.random()*(100000-1000+1)+1000);
 						tarjeta.setNumeroCuenta(Integer.parseInt(textNumeroCuenta.getText()));
-						tarjeta.setNumeroTarjeta(Integer.parseInt(textNumeroTarjeta.getText()));
+						tarjeta.setNumeroTarjeta(numerotarjeta);
 						tarjeta.setDni(Integer.parseInt(textDni.getText()));
 						tarjeta.setSaldo(Float.parseFloat(textSaldo.getText()));
 						
@@ -58,6 +59,11 @@ public class PanelAltaTarjetaDebito extends PanelGenerico{
 		});
 	}
 	
+	public void editarTarjeta(int dni){
+		 textDni.setText(dni+"");
+		 textDni.setEditable(false);
+	}
+	
 	@Override
 	public String setTitulo(String titulo) {
 		titulo = "Alta Tarjeta de Debito";
@@ -66,28 +72,23 @@ public class PanelAltaTarjetaDebito extends PanelGenerico{
 		
 	@Override
 	protected void agregarBotones() {
-		   JLabel labelNroTarjeta = new JLabel();
 		   JLabel labelNroCuenta = new JLabel();
 	       JLabel labelDniCliente = new JLabel();
 	       JLabel labelSaldo = new JLabel();
 	       
-	       labelNroTarjeta.setText("Nro Tarjeta");
-	       add(labelNroTarjeta, gridLabel(1, 2));
 	       labelNroCuenta.setText("Nro Cuenta");
 	       add(labelNroCuenta, gridLabel(1, 4));
 	       labelDniCliente.setText("DNI Cliente");
-	       add(labelDniCliente, gridLabel(1, 6));
-	       labelSaldo.setText("Saldo Disponible $ ");
-	       add(labelSaldo, gridLabel(1,8));
+	       add(labelDniCliente, gridLabel(1, 2));
+	       labelSaldo.setText("Saldo$ ");
+	       add(labelSaldo, gridLabel(1,6));
 	       
 	       textNumeroCuenta = new JTextField();
-	       textNumeroTarjeta = new JTextField();
 	       textSaldo = new JTextField();
 	       
-	       add(textNumeroTarjeta, gridText(3, 2));
 	       add(textNumeroCuenta, gridText(3, 4));
-	       add(textDni, gridText(3, 6));
-	       add(textSaldo, gridText(3, 8));
+	       add(textDni, gridText(3, 2));
+	       add(textSaldo, gridText(3, 6));
 	}
 }
 

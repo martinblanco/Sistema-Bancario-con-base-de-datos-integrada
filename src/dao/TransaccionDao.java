@@ -12,4 +12,5 @@ public interface TransaccionDao {
 	public List<Transaccion> listarTransaccion() throws DAOException;
 	public Transaccion consultarTransaccion(int dni) throws DAOException;
 	public List<Transaccion> listarTransaccionDni(int dni) throws DAOException;
+	public List<Transaccion> listarTransaccion(int dni) throws DAOException;
 }

@@ -10,4 +10,6 @@ public interface TarjetaCreditoDao {
 	public void modificarTarjetaCredito(int numeroTarjeta, float apagar) throws DAOException;
 	public List<TarjetaCredito> listarTarjetaCredito() throws DAOException;
 	public TarjetaCredito consultarTarjetaCredito(int numeroTarjeta) throws DAOException;
+	public void pagarTarjetaCredito(int numeroTarjeta, float apagar) throws DAOException;
+	public List<TarjetaCredito> listarTarjetaCredito(int dni) throws DAOException;
 }

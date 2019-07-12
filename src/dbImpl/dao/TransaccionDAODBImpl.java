@@ -46,24 +46,39 @@ public class TransaccionDAODBImpl extends DAODBImpl implements TransaccionDao{
         }
     }
 
-//    @Override
-//    public void modificarCliente(String nom,String ape, int dni) throws DAOException {
-//        String sql = "UPDATE cliente set nombre = '" + nom + "', apellido = '" + ape + "' WHERE dni = '" + dni + "'";
-//        Connection c = null;
-//        try {
-//        	c = coneccionDB(c);
-//        	statement(c,sql);
-//        } catch (SQLException e) {
-//        	throw new DAOException();
-//    	}finally {
-//    		desconeccionDB(c);
-//    	}
-//    }
-
     @Override
     public List<Transaccion> listarTransaccion() throws DAOException {
         List<Transaccion> lista = new ArrayList<>();
         String sql = "SELECT * FROM transaccion";
+        Connection c = null;
+		c = coneccionDB(c);
+        try {
+        	Transaccion resultado = null;
+            Statement s = c.createStatement();
+            ResultSet rs = s.executeQuery(sql);
+            while (rs.next()) {
+            	System.out.println("\r\nTransaccion: ");
+                System.out.println(rs.getString("numerotransaccion") + " " + rs.getString("numerocuenta") + " " + rs.getString("monto") + " " + rs.getString("destino"));
+                int rsnumerocuenta = rs.getInt("numerocuenta");
+				int rsnumerocuentadestino = rs.getInt("destino");
+				int rsdni = rs.getInt("dni");
+				int rsnumeroTransaccion = rs.getInt("numeroTransaccion");
+				float rsmonto = rs.getFloat("monto");
+				resultado = new Transaccion(rsdni,rsnumerocuenta,rsmonto,rsnumerocuentadestino,rsnumeroTransaccion);
+				lista.add(resultado);
+            }
+        } catch (SQLException e) {
+            rollbackDB(c);
+        } finally {
+        	desconeccionDB(c);
+        }
+        return lista;
+    }
+    
+    @Override
+    public List<Transaccion> listarTransaccion(int dni) throws DAOException {
+        List<Transaccion> lista = new ArrayList<>();
+        String sql = "SELECT * FROM transaccion WHERE dni = '" + dni + "'";;
         Connection c = null;
 		c = coneccionDB(c);
         try {

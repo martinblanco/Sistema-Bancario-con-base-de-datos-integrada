@@ -41,6 +41,7 @@ public class PanelNuevaTransaccion extends PanelGenerico{
 					transaccion = new Transaccion(DNI,NRCUENTA,MONTO,NRCUENTADESTINO,NRTRANSACCION);
 					if(CC - MONTO >= 0){
 						PanelNuevaTransaccion.this.miHandler.altaTransaccion(transaccion);
+						PanelNuevaTransaccion.this.miHandler.mostrarSucces("Correcto");
 					} else
 						PanelNuevaTransaccion.this.miHandler.mostrarError("Saldo insuficiente");
 				} catch (NumberFormatException e1) {

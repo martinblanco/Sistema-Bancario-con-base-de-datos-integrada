@@ -16,6 +16,13 @@ public class PanelCuentas extends PanelClientes{
 		titulo.setText("Cuentas");
 	}
 	
+	public PanelCuentas(Handler miCoordinador,int dni) {
+		super(miCoordinador);
+		listaUsuarios = new JTable(new CuentaModel(miCoordinador.mostrarTodosCuentas(dni)));
+		panelUsuarios.setViewportView(listaUsuarios);
+		titulo.setText("Mis Cuentas");
+	}
+	
 	@Override
 	protected void setBotonEliminar() {
 		botonEliminar.addActionListener(new ActionListener() {
@@ -25,6 +32,8 @@ public class PanelCuentas extends PanelClientes{
 				try {
 				int numerocuenta = (miHandler.mostrarTodosCuentas().get(listaUsuarios.getSelectedRow()).getNumeroCuenta());
 				miHandler.bajaCuenta(numerocuenta);
+				PanelCuentas.this.miHandler.mostrarSucces("Correcto");
+				miHandler.mostrarPanelCuentas();
 				} catch (ArrayIndexOutOfBoundsException e1) {
     				miHandler.mostrarError("Seleccione una opcion");
     			}
